@@ -24,6 +24,48 @@ public class DBQuery {
   """
 
 
+	// params for selAnswersQry are codpatient, codproject and questionnaire name
+  def selAnswersQryQuestionnaire = """select a.idanswer, a.thevalue, p.idpat, p.codpatient
+      from patient p, pat_gives_answer2ques pga, answer a, question q, item it
+      where p.codpatient = ?
+        -- and p.idpat = ?
+        and p.idpat = pga.codpat
+        and pga.codanswer = a.idanswer
+        and pga.codquestion = q.idquestion
+        and q.idquestion = it.iditem
+        and q.idquestion in
+            (select idquestion
+             from question q, item i, section s, interview iv, project p
+             where 1 = 1 -- s.codinterview = it.idinterview
+               and upper(iv.name) = upper(?)
+               and p.project_code = ?
+               and iv.codprj = p.idprj
+               and s.codinterview = iv.idinterview
+               and i.idsection = s.idsection
+               and q.idquestion = i.iditem );
+  """
+
+
+	def selAnswersQry = """select a.idanswer, a.thevalue, p.idpat, p.codpatient
+    from patient p, pat_gives_answer2ques pga, answer a, question q, item it
+    where p.codpatient = ?
+      -- and p.idpat = ?
+      and p.idpat = pga.codpat
+      and pga.codanswer = a.idanswer
+      and pga.codquestion = q.idquestion
+      and q.idquestion = it.iditem
+      and q.idquestion in
+          (select idquestion
+           from question q, item i, section s, interview iv, project p
+           where 1 = 1 -- s.codinterview = it.idinterview
+             -- and upper(iv.name) = upper(?)
+             and p.project_code = ?
+             and iv.codprj = p.idprj
+             and s.codinterview = iv.idinterview
+             and i.idsection = s.idsection
+             and q.idquestion = i.iditem );
+  """
+
 
   public DBQuery () {
     super();
@@ -34,6 +76,8 @@ public class DBQuery {
     this.dbPasswd = dbPassword
     this.dbUrl = dbUrl
     this.dbUsr = dbUser
+
+	  this.theSqlConn = Sql.newInstance(this.dbUrl, this.dbUsr, this.dbPasswd, 'org.postgresql.Driver')
   }
 
 
@@ -48,6 +92,12 @@ public class DBQuery {
   }
 
 
+	Sql setDbConn (dbConn) {
+		this.theSqlConn = dbConn
+		this.theSqlConn
+	}
+
+
   def closeDbConn () {
     theSqlConn.close();
   }
@@ -58,7 +108,7 @@ public class DBQuery {
    * @param String codPatient the patient code
    * @return a list with the codes for the samples, if any found
    */
-  def getSamples4Patient (codPatient) {
+  LinkedHashMap getSamples4Patient (codPatient) {
     def sampleCodes = []
 
     if (theSqlConn == null)
@@ -76,4 +126,13 @@ public class DBQuery {
   }
 
 
+
+	List getAnswers (codPatient, codProject) {
+		if (theSqlConn == null)
+			this.getDbConn()
+
+		def rows = theSqlConn.rows(selAnswersQry, [codPatient, codProject])
+
+		rows
+	}
 }

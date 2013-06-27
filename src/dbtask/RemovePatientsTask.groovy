@@ -13,6 +13,8 @@ import util.DBQuery
  */
 class RemovePatientsTask extends AbstractDBTask {
 
+	private DBQuery dbQuery
+
   def delAnswersQry = """delete from answer where idanswer in (
       select a.idanswer -- , a.thevalue
       from patient p, pat_gives_answer2ques pga, answer a, question q, item it
@@ -128,6 +130,8 @@ class RemovePatientsTask extends AbstractDBTask {
   def patientsCode = []
   def patientsRows = [:]
 
+	// this is actually a map with the following structure:
+	// codPatient -> [codeSample -> numquestions]
   def patientsWithSamples
 	def patientsDeleted
 
@@ -142,8 +146,10 @@ class RemovePatientsTask extends AbstractDBTask {
     this.patientsCode = args.get('patients', [])
     this.simulation = args.get('sim', true)
 
-    this.patientsWithSamples = []
+    this.patientsWithSamples = [:]
 	  this.patientsDeleted = 0
+
+	  this.dbQuery = new DBQuery()
   }
 
 
@@ -205,18 +211,34 @@ class RemovePatientsTask extends AbstractDBTask {
       def currentPatient = []
 	    currentPatient << it
 	    currentPatient << prjCode
-      def answers4Pat = sql.rows(selAnswersQry, currentPatient)
+      // def answers4Pat = sql.rows(selAnswersQry, currentPatient)
+	    this.dbQuery.setDbConn(sql)
+	    def answers4Pat = this.dbQuery.getAnswers(it, prjCode)
       // if (answers4Pat.size() == 0) return
       
       def answersId = answers4Pat.collect { it[0] }
+      def ans4CodeSamples = [:]
+	    boolean deletion = true
+	    def LinkedHashMap codeSamples = this.dbQuery.getSamples4Patient(currentPatient[0])
 
-      sql.withTransaction {
-	      def codeSamples = getSamples4Subject(sql, currentPatient[0])
-
-        if (currentPatient[0].length() == 9 && codeSamples.size() > 0) {
-          this.patientsWithSamples << currentPatient[0]
+	    // Check whether or not the patient has samples and the samples, questionnaires
+      if (currentPatient[0].length() == 9 && codeSamples.size() > 0) {
+        codeSamples.each { codSample -> // key->idPatient:value->codPatient
+          def samplesContent = this.dbQuery.getAnswers(codSample.value, prjCode)
+          ans4CodeSamples[codSample.value] = samplesContent.size()
+	        deletion = deletion && samplesContent.size() == 0
         }
-	      else { // delete if sample or normal subject w/o smaples
+
+        this.patientsWithSamples[currentPatient[0]] = ans4CodeSamples
+      }
+	    else // it is a sample or a patient with no samples
+	      deletion = true
+
+
+	    if (deletion) {
+	      sql.withTransaction {
+		      // def codeSamples = getSamples4Subject(sql, currentPatient[0])
+		       // delete if sample or normal subject w/o smaples
 	        def ansDeleted = deleteAnswers4Patient(sql, answersId)
 	        def pgasDeleted = deletePGAQEntries(sql, answersId)
 	        def patAffected = null
@@ -228,8 +250,10 @@ class RemovePatientsTask extends AbstractDBTask {
 
 	        this.patientsDeleted++
 	        println("answers: $ansDeleted (pgas: $pgasDeleted); patients affected: $patAffected")
-        }
-      } // EO sql
+	      } // EO sql
+
+	    }
+
     } // EO patientsCode for task
 
 	  this.patientsDeleted
@@ -248,13 +272,14 @@ class RemovePatientsTask extends AbstractDBTask {
 
 
 
-
+/*
   def getSamples4Subject (sqlObj, codPatient) {
     DBQuery dbq = new DBQuery(sqlObj)
     def sampleCodes = dbq.getSamples4Patient(codPatient)
 
     sampleCodes
   }
+*/
 
 
 /**

@@ -18,7 +18,7 @@ uniqueVals.each { item -> printClosure (item)}
 
 // listPats = ['157071001', '157071004', '157071005', '157071026',
    // '157071027', '157072025']
-listPats = ['188011009', '157102002', '157091049', '157091003', '157091023',
+listPats = ['188011009', '157091049', '157091003', '157091023',
 						'157102002','157401002', '57F093003',	'57F093007', '162093003',
 						'162091001']
 
@@ -106,10 +106,15 @@ def testDelPatients () {
 	def deletions = rpt.performTask(sqlObj)
 	assert deletions >= 0
 
-	def patWithSamples = rpt.getSubjectsWithSamples()
-	patWithSamples.each { it ->
-		println("$it")
+	println "Patients with samples:"
+	def patWithSamples = rpt.getSubjectsWithSamples() // this is a map subject -> map of samples
+	patWithSamples.each {
+		println "subject code is $it.key"
+		it.value.each { samplesMap ->
+			println "$samplesMap.key has $samplesMap.value answers"
+		}
 	}
+	println "** Subjects deleted: $deletions **"
 }
 
 
