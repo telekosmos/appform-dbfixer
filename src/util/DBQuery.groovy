@@ -11,6 +11,8 @@ import groovy.sql.Sql
  */
 public class DBQuery {
 
+	private String QES_SPAIN = "QES_Español"
+
   private String dbUrl
   private String dbUsr
   private String dbPasswd
@@ -24,11 +26,21 @@ public class DBQuery {
   """
 
 
+
+	def selPatientPerf = """select i.idinterview, pf.idperformance, p.idpat
+		from interview i, patient p, performance pf
+		where i.name = ? -- interview name
+		  and pf.codinterview = i.idinterview
+		  and p.codpatient = ? -- patient code
+		  and pf.codpat = p.idpat;
+	"""
+
+
 	// params for selAnswersQry are codpatient, codproject and questionnaire name
-  def selAnswersQryQuestionnaire = """select a.idanswer, a.thevalue, p.idpat, p.codpatient
+  def selAnswersQryQuestionnaire = """select a.idanswer, pga.idp_a_q, a.thevalue, p.idpat, p.codpatient
       from patient p, pat_gives_answer2ques pga, answer a, question q, item it
       where p.codpatient = ?
-        -- and p.idpat = ?
+        -- and p.idpat = xxx
         and p.idpat = pga.codpat
         and pga.codanswer = a.idanswer
         and pga.codquestion = q.idquestion
@@ -65,6 +77,31 @@ public class DBQuery {
              and i.idsection = s.idsection
              and q.idquestion = i.iditem );
   """
+
+	def deletePerf = """delete
+		from performance
+		where idperformance = ?;
+	"""
+
+
+	def deleteAnswers = """delete
+		from answer
+		where idanswer in (?);
+	"""
+
+
+	def deletePGQAs = """delete
+		from pat_gives_answers2ques
+		where idp_a_q in (?);
+	"""
+
+
+	def selQuestionnaires = """
+	select idinterview, name
+	from interview i
+	where i.name = ?;
+	"""
+
 
 
   public DBQuery () {
@@ -118,7 +155,7 @@ public class DBQuery {
     // def rows = []
     def res = [:]
 
-    def rows = theSqlConn.rows(selSamplesQry)
+    def rows = theSqlConn.rows(selPatSamples)
     rows.each { row ->
       res[row.idpat] = row.codpatient
     }
@@ -135,4 +172,172 @@ public class DBQuery {
 
 		rows
 	}
+
+
+	def getAnswers4UserIntrv (codPatient, codProject, questionnaireName) {
+		if (theSqlConn == null)
+			this.getDbConn()
+
+		def params = [codPatient, questionnaireName, codProject]
+		def myQry = this.selAnswersQryQuestionnaire.replaceFirst("\\?", "'$codPatient'")
+/*
+		if (questionnaireName.equals(QES_SPAIN)) {
+			myQry = myQry.replaceFirst("\\?", "'$QES_SPAIN'")
+			println("## equals: $questionnaireName and $QES_SPAIN")
+		}
+		else {
+			myQry = myQry.replaceFirst("\\?", "'$questionnaireName'")
+			println("## different: $questionnaireName and $QES_SPAIN")
+		}
+*/
+		myQry = myQry.replaceFirst("\\?", "'$questionnaireName'")
+		myQry = myQry.replaceFirst("\\?", "'$codProject'")
+		// def myQryEscaped = groovy.json.StringEscapeUtils.escapeJava(myQry)
+		// def myQryUnescaped = groovy.json.StringEscapeUtils.unescapeJava(myQry)
+		// def qName = questionnaireName.getBytes("UTF-8")
+		// println("bytes: questionnaire: $questionnaireName $qName vs\n $QES_SPAIN ${QES_SPAIN.getBytes("UTF-8")}")
+
+		def rows = theSqlConn.rows(myQry)
+
+		rows
+	}
+
+	/**
+	 * Return a list with idinterview, idperformance, idpat
+	 * @param codPatient the patient code
+	 * @param questionnaireName the questionnaire name
+	 * @return a list with rows containing the result
+	 */
+	def getPatientsPerformances (codPatient, questionnaireName) {
+		if (theSqlConn == null)
+			this.getDbConn()
+
+		def params = [questionnaireName, codPatient]
+		def myQry = ""
+/*
+		if (questionnaireName.equals(QES_SPAIN)) {
+			myQry = this.selPatientPerf.replaceFirst("\\?", "'$questionnaireName'")
+			println("performances-> ## equals: $questionnaireName and $QES_SPAIN")
+		}
+		else {
+			myQry = this.selPatientPerf.replaceFirst("\\?", "'$QES_SPAIN'")
+			println("performances-> ## differents: $questionnaireName and $QES_SPAIN")
+		}
+*/
+		myQry = this.selPatientPerf.replaceFirst("\\?", "'$questionnaireName'")
+		myQry = myQry.replaceFirst("\\?", "'$codPatient'")
+		println "$questionnaireName, $codPatient for\n${myQry}"
+
+		// def rows = theSqlConn.rows(this.selPatientPerf, params)
+		def rows = theSqlConn.rows(myQry)
+
+		if (rows.size() > 0)
+			println "Perf info: idinterview: ${rows[0]['idinterview']}; idperf: ${rows[0]['idperformance']}; idpat: ${rows[0]['idpat']}\n"
+		else
+			println "No performances for $codPatient and $questionnaireName\n"
+
+		rows
+	}
+
+
+
+
+	/**
+	 * Get the number of questionnaires which match the name
+	 * @param name
+	 */
+	def getQuestionnaires (name) {
+		if (theSqlConn == null)
+			this.getDbConn()
+
+		println "getQuestionnaires for $name"
+		def rows = []
+
+
+		/* def qryName = name.tr("ñ", "\u00F1")
+		def qryName = name.tr("\u00F1", "ñ")
+		println "utf8 -> name: $name vs qryName: $qryName & ${qryName == name}"
+		rows = theSqlConn.rows(this.selQuestionnaires, [qryName], {})
+		if (rows.size() > 0)
+			println ("tokenize worked out!!!!!")
+    */
+
+		if (name.equals(QES_SPAIN))
+			rows = theSqlConn.rows(this.selQuestionnaires, [QES_SPAIN])
+
+		if (rows.size() == 0) {
+			println "... last chance"
+			rows = theSqlConn.rows(this.selQuestionnaires.replaceFirst('\\?', "'$QES_SPAIN'"))
+		}
+
+		rows
+	}
+
+
+// DELETION QUERIES /////////////////////////////////////////////////////
+	/* this.dbQuery.deletePerformance(aPerf)
+	this.dbQuery.deletePGAQs(idPgas)
+	this.dbQuery.deleteAnswers(answers)
+
+	def delOnlyAnswersQry = "delete from answer where idanswer in ("
+  answersIdList.each { it ->
+    delOnlyAnswersQry += it + ","
+  }
+  delOnlyAnswersQry = delOnlyAnswersQry.substring(0, delOnlyAnswersQry.length()-1)+")"
+
+  def res = [:]
+  def patientsQry = this.patsIdQry.replaceFirst('\\?', codesString)
+
+	*/
+
+	def deletePerformance (aPerf) {
+		if (theSqlConn == null)
+			this.getDbConn()
+
+		def currentDeletePerf = deletePerf.replaceFirst('\\?', aPerf.toString())
+		// theSqlConn.execute(currentDeletePerf)
+		// println "$currentDeletePerf"
+		def rowsAffected = theSqlConn.updateCount
+
+		rowsAffected
+	}
+
+
+
+	def deletePgas (pgaIdList) {
+		if (theSqlConn == null)
+			this.getDbConn()
+
+		def pgaIdListString = ""
+		pgaIdList.each { pgaIdListString += it.toString() + "," }
+		pgaIdListString = pgaIdListString.substring(0, pgaIdListString.length()-1)
+
+		def currentDeletePGQAs = deletePGQAs.replaceFirst('\\?', pgaIdListString)
+		// println "$currentDeletePGQAs"
+		// theSqlConn.execute(deletePGQAs)
+
+		def rowsAffected = this.theSqlConn.updateCount
+
+		rowsAffected
+	}
+
+
+
+	def deleteIntrvAnswers (idAnswersList) {
+		if (theSqlConn == null)
+			this.getDbConn()
+
+		def idAnsListString = ""
+		idAnswersList.each { idAnsListString += it.toString() + "," }
+		idAnsListString = idAnsListString.substring(0, idAnsListString.length()-1)
+
+		def currentDeleteAnswers = deleteAnswers.replaceFirst('\\?', idAnsListString)
+		// println "$currentDeleteAnswers"
+		// theSqlConn.execute(deletePGQAs)
+
+		def rowsAffected = this.theSqlConn.updateCount
+
+		rowsAffected
+	}
+
 }

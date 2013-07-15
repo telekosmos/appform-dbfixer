@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 43
+/svn/episrc/!svn/ver/82/SqlFixer/src/dbtask
+END
+AbstractDBTask.groovy
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/episrc/!svn/ver/82/SqlFixer/src/dbtask/AbstractDBTask.groovy
+END
+QryRow.groovy
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/episrc/!svn/ver/83/SqlFixer/src/dbtask/QryRow.groovy
+END
+RemoveMultAnsByDateDBTask.groovy
+K 25
+svn:wc:ra_dav:version-url
+V 77
+/svn/episrc/!svn/ver/185/SqlFixer/src/dbtask/RemoveMultAnsByDateDBTask.groovy
+END
+RemoveMultAnsDBTask.groovy
+K 25
+svn:wc:ra_dav:version-url
+V 71
+/svn/episrc/!svn/ver/184/SqlFixer/src/dbtask/RemoveMultAnsDBTask.groovy
+END

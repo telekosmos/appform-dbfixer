@@ -36,47 +36,6 @@ class RemovePatientsTask extends AbstractDBTask {
                and q.idquestion = i.iditem );
   """
 
-// params for selAnswersQry are codpatient, codproject and questionnaire name
-  def selAnswersQryQuestionnaire = """select a.idanswer, a.thevalue, p.idpat, p.codpatient
-      from patient p, pat_gives_answer2ques pga, answer a, question q, item it
-      where p.codpatient = ?
-        -- and p.idpat = ?
-        and p.idpat = pga.codpat
-        and pga.codanswer = a.idanswer
-        and pga.codquestion = q.idquestion
-        and q.idquestion = it.iditem
-        and q.idquestion in
-            (select idquestion
-             from question q, item i, section s, interview iv, project p
-             where 1 = 1 -- s.codinterview = it.idinterview
-               and upper(iv.name) = upper(?)
-               and p.project_code = ?
-               and iv.codprj = p.idprj
-               and s.codinterview = iv.idinterview
-               and i.idsection = s.idsection
-               and q.idquestion = i.iditem );
-  """
-	
-	
-	def selAnswersQry = """select a.idanswer, a.thevalue, p.idpat, p.codpatient
-    from patient p, pat_gives_answer2ques pga, answer a, question q, item it
-    where p.codpatient = ?
-      -- and p.idpat = ?
-      and p.idpat = pga.codpat
-      and pga.codanswer = a.idanswer
-      and pga.codquestion = q.idquestion
-      and q.idquestion = it.iditem
-      and q.idquestion in
-          (select idquestion
-           from question q, item i, section s, interview iv, project p
-           where 1 = 1 -- s.codinterview = it.idinterview
-             -- and upper(iv.name) = upper(?)
-             and p.project_code = ?
-             and iv.codprj = p.idprj
-             and s.codinterview = iv.idinterview
-             and i.idsection = s.idsection
-             and q.idquestion = i.iditem );
-  """
 
 
   def patsIdQry = """select p.idpat as idpat, p.codpatient as codpatient
@@ -119,12 +78,6 @@ class RemovePatientsTask extends AbstractDBTask {
   """
 
 
-  def selPatSamples = """
-    select p.idpat, p.codpatient
-    from patient p
-    where p.codpatient like '?__'
-    order by 2;
-  """
 
 
   def patientsCode = []
@@ -190,7 +143,7 @@ class RemovePatientsTask extends AbstractDBTask {
    }
    }
    */
-  public Integer performTask(Sql sql) {
+  public Integer performTask(Sql sql, Closure clos) {
 
     if (this.simulation)
       println "Performing simulation process..."
@@ -256,7 +209,7 @@ class RemovePatientsTask extends AbstractDBTask {
 
     } // EO patientsCode for task
 
-	  this.patientsDeleted
+	  (Integer)this.patientsDeleted
   }
 	
 	
@@ -266,8 +219,8 @@ class RemovePatientsTask extends AbstractDBTask {
   * always will be an empty list
   * @return a list of strings with the patients code with samples
   */
-	def getSubjectsWithSamples () {
-		return this.patientsWithSamples
+	ArrayList<String> getSubjectsWithSamples () {
+		return (ArrayList<String>)this.patientsWithSamples
 	}
 
 

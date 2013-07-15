@@ -102,11 +102,13 @@ public class RemoveMultAnsByDateDBTask extends AbstractDBTask {
   } // EO deletionRule
 
 
-  public Integer performTask(Sql theSql) {
 
+
+  public Integer performTask(Sql theSql, Closure constraint) {
     def multipleAns = []
     ansCount = 0;
 	  println "QryRow.performTask:\n ${this.qry}"
+
     theSql.query(this.qry) { ResultSet rs ->
       while (rs.next()) {
         QryRow row = new QryRow(rs.getInt(QryRow.IDQUESTION_IDX),
