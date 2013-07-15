@@ -23,7 +23,7 @@ public class RemoveMultAnsDBTask extends AbstractDBTask {
 /**
  * Performa a task over the rs content
  */
-  public Integer performTask (Sql theSql, Closure constraint) {
+  public void performTask (Sql theSql) {
 
     def multipleAns = []
     def txClosure = { item ->
@@ -124,7 +124,6 @@ public class RemoveMultAnsDBTask extends AbstractDBTask {
       } // EO while
     } // closure
 
-	  return 1
   } // EO performTask
 
 }

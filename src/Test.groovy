@@ -1,5 +1,5 @@
-
-
+import dbtask.FixingTasksHub
+import dbtask.RemoveInterviewsTask
 import dbtask.RemovePatientsTask
 import groovy.sql.Sql
 
@@ -47,7 +47,7 @@ def testSqlObjectIsNotNull() {
   assert rpt != null
   assert rpt.simulation
   assert rpt.patientsRows.size() == 0
-  assert rpt.patientsCode.size() == listPats.size()
+  assert rpt.patientsIntrvs.size() == listPats.size()
 }
 
 
@@ -118,6 +118,64 @@ def testDelPatients () {
 }
 
 
+def testDelInterviews () {
+	// HashMap<String, ArrayList<String>> m = new HashMap<String, ArrayList<String>>()
+	/*
+
+	m.put('157071001', ['Dieta'])
+	m.put('157071004', ['Dieta'])
+	m.put('157071005', ['Dieta', 'Calidad de entrevista'])
+	m.put('157071026', ['Dieta'])
+	m.put('157071027', ['Dieta'])
+	m.put('157072023', ['Calidad de entrevista'])
+	m.put('157072025', ['Calidad de entrevista'])
+  */
+
+
+	def fuckMap = [
+		// '157071001': ['Dieta'],
+		// '157071004':['Dieta'],
+		'157071005':['QES_Español','Dieta','Calidad_Entrevista'],
+		// '157071026':['Dieta'],
+		// '157071027':['Dieta'],
+		'157071068':['QES_Español'],
+		// '157072023':['Calidad_Entrevista'],
+		// '157072025':['Calidad_Entrevista'],
+		'157072050':['QES_Español'],
+		'157072202':['QES_Español']
+	]
+
+/*
+	def task = new RemoveInterviewsTask(interviews: fuckMap, sim: true)
+
+	// return true if the constraint is satisfied, then the plan can be carried out
+	def constraint = { caller ->
+		println "In the closure!!"
+		if (caller.intrv.indexOf('QES') != -1) {
+			println "Checking for QES samples for ${caller.codPat}"
+			def rsSamples = caller.dbQuery.getSamples4Patient(caller.codPat)
+			return rsSamples.size() == 0
+		}
+		else
+			return true
+	}
+*/
+
+	FixingTasksHub fs = new FixingTasksHub()
+	Map jsonMap = fs.deleteInterviews('localhost', 'gcomesana', 'appform', false, fuckMap);
+/*
+	def totalRowsDeleted = task.performTask(sqlObj, {})
+	def patsWithSamples = task.getPatientsWithSamples()
+	def interviewsDel = task.getInterviewsDeleted()
+*/
+	jsonMap.each {
+		println "** ${it.key} => ${it.value}"
+	}
+	// println "totalRows: $totalRowsDeleted; pats with samples: $patsWithSamples; interviews removed: $interviewsDel\n"
+
+}
+
+
 setUp()
 /*
 testSqlObjectIsNotNull()
@@ -126,7 +184,8 @@ testNumPatients()
 testAnswers4Pats ()
 testPgaRows ()
 */
-testDelPatients()
+// testDelPatients()
 
-
+testDelInterviews()
+println "\nSe finé\n"
 setDown()
