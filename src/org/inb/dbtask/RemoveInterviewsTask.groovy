@@ -1,7 +1,7 @@
-package dbtask
+package org.inb.dbtask
 
 import groovy.sql.Sql
-import util.DBQuery
+import org.inb.util.DBQuery
 
 /**
  * This task removes interview instances for the patients. It is
@@ -117,12 +117,18 @@ class RemoveInterviewsTask extends AbstractDBTask {
 
 						println("answers info: $answerIds; pgas: $idPgas")
 
-						sql.withTransaction {
-							totalRowsAffected += this.dbQuery.deletePerformance(aPerf)
-							totalRowsAffected += this.dbQuery.deletePgas(idPgas)
-							totalRowsAffected += this.dbQuery.deleteIntrvAnswers(answerIds)
-							// println "** ================= **"
+						if (this.simulation) {
+							totalRowsAffected++ // for performance
+							totalRowsAffected += answerIds.size()
+							totalRowsAffected += idPgas.size()
 						}
+						else
+							sql.withTransaction {
+								totalRowsAffected += this.dbQuery.deletePerformance(aPerf)
+								totalRowsAffected += this.dbQuery.deletePgas(idPgas)
+								totalRowsAffected += this.dbQuery.deleteIntrvAnswers(answerIds)
+								// println "** ================= **"
+							}
 						this.interviewsDeleted++
 
 					}

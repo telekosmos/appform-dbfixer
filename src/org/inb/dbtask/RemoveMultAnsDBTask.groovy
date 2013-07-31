@@ -1,4 +1,4 @@
-package dbtask
+package org.inb.dbtask
 /**
  * Created by IntelliJ IDEA.
  * User: bioinfo
@@ -8,6 +8,7 @@ package dbtask
  */
 
 import groovy.sql.*
+
 import java.sql.ResultSet
 
 public class RemoveMultAnsDBTask extends AbstractDBTask {

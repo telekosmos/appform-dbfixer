@@ -1,6 +1,6 @@
 package test
 
-import dbtask.RemoveQuestionnairePatientsTask
+import org.inb.dbtask.RemoveQuestionnairePatientsTask
 import groovy.sql.*
 
 /**

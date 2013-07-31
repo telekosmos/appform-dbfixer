@@ -6,8 +6,8 @@
 
 
 import groovy.sql.*
-import dbtask.RemoveMultAnsByDateDBTask
-import dbtask.RemoveQuestionnairePatientsTask
+import org.inb.dbtask.RemoveMultAnsByDateDBTask
+import org.inb.dbtask.RemoveQuestionnairePatientsTask
 
 // import dbtask.RemoveMultAnsByDateDBTask
 

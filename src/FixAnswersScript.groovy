@@ -8,7 +8,7 @@
 
 import groovy.sql.Sql
 
-import dbtask.RemoveMultAnsByDateDBTask
+import org.inb.dbtask.RemoveMultAnsByDateDBTask
 
 // STARTS GROOVY SCRIPT /////////////////////////////////////////////////////
 String dbUrl = "jdbc:postgresql://localhost:4321/appform"
