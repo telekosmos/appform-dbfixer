@@ -1,4 +1,4 @@
-package dbtask
+package org.inb.dbtask
 /**
  * Created by IntelliJ IDEA.
  * User: bioinfo
@@ -9,7 +9,7 @@ package dbtask
 
 import java.sql.ResultSet
 import groovy.sql.Sql
-import util.QryRow
+import org.inb.util.QryRow
 
 public class RemoveMultAnsByDateDBTask extends AbstractDBTask {
 

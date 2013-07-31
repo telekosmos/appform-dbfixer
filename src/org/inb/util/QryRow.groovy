@@ -1,4 +1,9 @@
-package dbtask
+package org.inb.util
+
+
+import java.sql.Timestamp
+
+
 
 /**
  * This class encapsulates a row with the following form:
@@ -10,9 +15,6 @@ package dbtask
  * 1183	4761	1	1	3437853	9999
  * 1183	4761	1	1	3437888	1
  */
-
-import java.sql.Timestamp
-
 public class QryRow {
 
   public static final int IDQUESTION_IDX = 1
@@ -21,8 +23,8 @@ public class QryRow {
   public static final int ANSORD_IDX = 4
   public static final int IDANS_IDX = 5
   public static final int VALUE_IDX = 6
-  public static final int CREATION_IDX = 7
-  public static final int UPDATE_IDX = 8
+	public static final int CREATION_IDX = 7
+	public static final int UPDATE_IDX = 8
 
   Integer idQuestion
   Integer idPat
@@ -30,34 +32,20 @@ public class QryRow {
   Integer ansOrder
   Integer idAnswer
   String ansValue
-
-  Timestamp dateCreated
-  Timestamp lastUpdated
-
+	Timestamp dateCreated
+	Timestamp lastUpdate
 
 
   public QryRow (Integer idQue, Integer idPat, Integer ansNum, Integer ansOrd,
-                Integer idAns, String ansVal) {
+                Integer idAns, String ansVal, Timestamp creationDate, Timestamp lastUpd) {
     this.idQuestion = idQue;
     this.idPat = idPat
     this.ansNumber = ansNum
     this.ansOrder = ansOrd
     this.idAnswer = idAns
     this.ansValue = ansVal
-  }
-
-
-  public QryRow (Integer idQue, Integer idPat, Integer ansNum, Integer ansOrd,
-                Integer idAns, String ansVal, Timestamp createDate, Timestamp updDate) {
-    this.idQuestion = idQue;
-    this.idPat = idPat
-    this.ansNumber = ansNum
-    this.ansOrder = ansOrd
-    this.idAnswer = idAns
-    this.ansValue = ansVal
-
-    this.dateCreated = createDate
-    this.lastUpdated = updDate
+	  this.dateCreated = creationDate
+	  this.lastUpdate = lastUpd
   }
 
 
@@ -94,16 +82,6 @@ public class QryRow {
   }
 
 
-  public Timestamp getDateCreated () {
-    return this.dateCreated
-  }
-
-
-  public Timestamp getLastUpdate () {
-    return this.lastUpdated
-  }
-
-
   public String comparisonVals () {
     return this.idQuestion +" | " +this.idPat + " | " +
            this.ansOrder + " | " + this.ansNumber + " | " +this.ansValue
@@ -124,23 +102,6 @@ public class QryRow {
       return -1
     else
       return 0;
-  }
-
-
-
-
-
-/**
- * Compare the creation date of this row with the creation date of the
- * row passed as the paremeter
- * @param row, an QryRow object to compare the creation date
- * @return 0, the creation dates are the same; < 0 this creation date is lower
- * than row creation date; > 0 if date is bigger than row creation date
- */
-  public int compareCreationDate (QryRow row) {
-    Timestamp rowCreated = row.getDateCreated()
-
-    return dateCreated.compareTo(rowCreated);
   }
 
 } // EO QryRow class

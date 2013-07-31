@@ -1,8 +1,7 @@
-package dbtask
+package org.inb.dbtask
 
 import groovy.sql.Sql
-import sun.jvm.hotspot.debugger.posix.elf.ELFSectionHeader
-import util.DBQuery
+import org.inb.util.DBQuery
 
 /**
  * Created by IntelliJ IDEA.
@@ -87,6 +86,7 @@ class RemovePatientsTask extends AbstractDBTask {
 	// codPatient -> [codeSample -> numquestions]
   def patientsWithSamples
 	def patientsDeleted
+	def listOfDeletions
 
   def simulation = true // to use select (simulation = true) or delete
 
@@ -101,6 +101,7 @@ class RemovePatientsTask extends AbstractDBTask {
 
     this.patientsWithSamples = [:]
 	  this.patientsDeleted = 0
+	  this.listOfDeletions = []
 
 	  this.dbQuery = new DBQuery()
   }
@@ -108,8 +109,11 @@ class RemovePatientsTask extends AbstractDBTask {
 
   /**
    * Performs a task, which will be performed by some sql statement(s) and methods.
-   * This is an interface method. For this class, the task to perform is patients and
-   * associated data deletion.
+   * For this class, the task to perform is patients and associated data deletion.
+   * Constraints:
+   * - subjects shouldn't have samples
+   * - if subject has any sample(s), samples shouldn't have questionnaires
+   *
    * The patient deletion is performed through the following steps:
    * - patient's answers deletion
    * - deletion of rows in pat_gives_ans2ques table where the patient is involved
@@ -151,16 +155,7 @@ class RemovePatientsTask extends AbstractDBTask {
 // iterate over the patients list
     this.patientsCode.each { it ->
       def prjCode = it.substring(0, 3)
-	    println("** subject: $it **")
-      /*
-      if (!prjCode.isNumber()) {
-        def ans = sql.firstRow(selPrjCode, [currentPatient])
-        prjCode = ans.idprj
-        currentPatient
-      }
-//      currentPatient[2] = prjCode
-//      currentPatient << prjCode
-      */
+
       def currentPatient = []
 	    currentPatient << it
 	    currentPatient << prjCode
@@ -172,9 +167,12 @@ class RemovePatientsTask extends AbstractDBTask {
       def answersId = answers4Pat.collect { it[0] }
       def ans4CodeSamples = [:]
 	    boolean deletion = true
-	    def LinkedHashMap codeSamples = this.dbQuery.getSamples4Patient(currentPatient[0])
 
+	    LinkedHashMap codeSamples = this.dbQuery.getSamples4Patient(currentPatient[0])
+	    println("\n** subject: $it -> samples: ${codeSamples.size()} **")
 	    // Check whether or not the patient has samples and the samples, questionnaires
+	    // If patient has no samples, deletion for him/her is true
+	    // If patient has samples but not answers for them, deletion is true
       if (currentPatient[0].length() == 9 && codeSamples.size() > 0) {
         codeSamples.each { codSample -> // key->idPatient:value->codPatient
           def samplesContent = this.dbQuery.getAnswers(codSample.value, prjCode)
@@ -188,7 +186,7 @@ class RemovePatientsTask extends AbstractDBTask {
 	      deletion = true
 
 
-	    if (deletion) {
+	    if (deletion) { // if patient has to be deleted
 	      sql.withTransaction {
 		      // def codeSamples = getSamples4Subject(sql, currentPatient[0])
 		       // delete if sample or normal subject w/o smaples
@@ -196,15 +194,19 @@ class RemovePatientsTask extends AbstractDBTask {
 	        def pgasDeleted = deletePGAQEntries(sql, answersId)
 	        def patAffected = null
 
-	        if (answers4Pat.size() > 0)
+	        if (answers4Pat.size() > 0) {
 	          patAffected = deletePatient(sql, [answers4Pat[0][2],answers4Pat[0][3]])
-	        else
+		        this.listOfDeletions << answers4Pat[0][3]
+	        }
+	        else {
 		        patAffected = deletePatient(sql, [currentPatient[0]])
+		        this.listOfDeletions << currentPatient[0]
+	        }
 
 	        this.patientsDeleted++
+
 	        println("answers: $ansDeleted (pgas: $pgasDeleted); patients affected: $patAffected")
 	      } // EO sql
-
 	    }
 
     } // EO patientsCode for task
@@ -289,7 +291,8 @@ class RemovePatientsTask extends AbstractDBTask {
       res = answersIdList.size()
     }
     else {
-      sqlObj.execute (delOnlyAnswersQry)
+	    if (answersIdList.size() > 0)
+        sqlObj.execute(delOnlyAnswersQry)
 //      println "$delOnlyAnswersQry"
       res = sqlObj.updateCount
     }
@@ -322,8 +325,10 @@ class RemovePatientsTask extends AbstractDBTask {
       res = answersIdList.size()
     }
     else {
-      sqlObj.execute(delPgaQry)
-      res = sqlObj.updateCount
+	    if (answersIdList.size() > 0)
+        sqlObj.execute(delPgaQry)
+
+	    res = sqlObj.updateCount
     }
     res
   }
@@ -360,7 +365,7 @@ class RemovePatientsTask extends AbstractDBTask {
     else {
 	    if (patInfo.size() < 2) {
 		    def qry = "delete from patient where codpatient = ?"
-		    res = sqlObj.execute(delPatient, patInfo)
+		    res = sqlObj.execute(qry, patInfo)
 	    }
 		  else {
         res = sqlObj.execute(delPatient, [patInfo[1], patInfo[0]])

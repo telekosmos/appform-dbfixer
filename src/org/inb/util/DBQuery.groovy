@@ -1,4 +1,4 @@
-package util
+package org.inb.util
 
 import groovy.sql.Sql
 
@@ -78,6 +78,16 @@ public class DBQuery {
              and q.idquestion = i.iditem );
   """
 
+
+	def updPatCode = """update patient
+		set codpatient = ?, -- '157072017',
+		   codprj = ?, -- '157',
+		   codhosp = ?, -- '07',
+		   cod_type_subject = ?, -- '2',
+		   codpat = ? -- '017'
+		where codpatient = ? -- '157072005';
+	"""
+
 	def deletePerf = """delete
 		from performance
 		where idperformance = ?;
@@ -91,7 +101,7 @@ public class DBQuery {
 
 
 	def deletePGQAs = """delete
-		from pat_gives_answers2ques
+		from pat_gives_answer2ques
 		where idp_a_q in (?);
 	"""
 
@@ -155,7 +165,7 @@ public class DBQuery {
     // def rows = []
     def res = [:]
 
-    def rows = theSqlConn.rows(selPatSamples)
+    def rows = theSqlConn.rows(selSamplesQry)
     rows.each { row ->
       res[row.idpat] = row.codpatient
     }
@@ -262,13 +272,58 @@ public class DBQuery {
 			println ("tokenize worked out!!!!!")
     */
 
-		if (name.equals(QES_SPAIN))
-			rows = theSqlConn.rows(this.selQuestionnaires, [QES_SPAIN])
-
 		if (rows.size() == 0) {
 			println "... last chance"
 			rows = theSqlConn.rows(this.selQuestionnaires.replaceFirst('\\?', "'$QES_SPAIN'"))
 		}
+
+		rows
+	}
+
+
+
+	/**
+	 * Update a patient code by changing it from the old one to a new one
+	 * @param oldSubjecCode, subject code to be changed
+	 * @param newSubjectCode, new code to change
+	 * @return the rows affected, 1 if successful, 0 otherwise
+	 */
+	def updateSubjectCode (oldSubjecCode, newSubjectCode) {
+		if (theSqlConn == null)
+			this.getDbConn()
+
+		def newCodPrj = newSubjectCode[0..2]
+		def newCodHosp = newSubjectCode[3..4]
+		def newCodType = newSubjectCode[5]
+		def newCodPat = newSubjectCode[6..8]
+
+		def myQry = this.updPatCode.replaceFirst("\\?", newSubjectCode)
+		myQry = myQry.replaceFirst("\\?", newCodPrj)
+		myQry = myQry.replaceFirst("\\?", newCodHosp)
+		myQry = myQry.replaceFirst("\\?", newCodType)
+		myQry = myQry.replaceFirst("\\?", newCodPat)
+		myQry = myQry.replaceFirst("\\?", oldSubjecCode)
+
+		def rowsAffected = 0
+		try {
+			rowsAffected = this.theSqlConn.executeUpdate(myQry)
+		}
+		catch (sqlEx) {
+			rowsAffected = -1 // error happend
+		}
+
+		rowsAffected
+	}
+
+
+
+	/**
+	 * Runs arbitrary sql queries untouched
+	 * @param sqlQuery, the query which will be run
+	 * @return the rows returned by the query
+	 */
+	def runSQL (sqlQuery) {
+		def rows = theSqlConn.rows(sqlQuery)
 
 		rows
 	}
@@ -295,7 +350,7 @@ public class DBQuery {
 			this.getDbConn()
 
 		def currentDeletePerf = deletePerf.replaceFirst('\\?', aPerf.toString())
-		// theSqlConn.execute(currentDeletePerf)
+		theSqlConn.execute(currentDeletePerf)
 		// println "$currentDeletePerf"
 		def rowsAffected = theSqlConn.updateCount
 
@@ -314,7 +369,7 @@ public class DBQuery {
 
 		def currentDeletePGQAs = deletePGQAs.replaceFirst('\\?', pgaIdListString)
 		// println "$currentDeletePGQAs"
-		// theSqlConn.execute(deletePGQAs)
+		theSqlConn.execute(currentDeletePGQAs)
 
 		def rowsAffected = this.theSqlConn.updateCount
 
@@ -333,7 +388,7 @@ public class DBQuery {
 
 		def currentDeleteAnswers = deleteAnswers.replaceFirst('\\?', idAnsListString)
 		// println "$currentDeleteAnswers"
-		// theSqlConn.execute(deletePGQAs)
+		theSqlConn.execute(currentDeleteAnswers)
 
 		def rowsAffected = this.theSqlConn.updateCount
 

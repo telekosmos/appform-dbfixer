@@ -1,4 +1,4 @@
-package dbtask
+package org.inb.dbtask
 /**
  * Created by IntelliJ IDEA.
  * User: bioinfo

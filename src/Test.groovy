@@ -1,6 +1,5 @@
-import dbtask.FixingTasksHub
-import dbtask.RemoveInterviewsTask
-import dbtask.RemovePatientsTask
+import org.inb.dbtask.FixingTasksHub
+import org.inb.dbtask.RemovePatientsTask
 import groovy.sql.Sql
 
 /*
@@ -22,8 +21,8 @@ listPats = ['188011009', '157091049', '157091003', '157091023',
 						'157102002','157401002', '57F093003',	'57F093007', '162093003',
 						'162091001']
 
-rpt = null
-sqlObj = null
+def rpt = null
+def sqlObj = null
 
 def setUp () {
 
@@ -103,19 +102,27 @@ def testPgaRows () {
 
 
 def testDelPatients () {
-	def deletions = rpt.performTask(sqlObj)
-	assert deletions >= 0
+	// def deletions = rpt.performTask(sqlObj)
+	// assert deletions >= 0
+
+	FixingTasksHub fs = new FixingTasksHub()
+	Map jsonMap =
+			fs.deletePatients ('localhost', 'gcomesana', 'appform', true, listPats);
 
 	println "Patients with samples:"
-	def patWithSamples = rpt.getSubjectsWithSamples() // this is a map subject -> map of samples
+	// def patWithSamples = rpt.getSubjectsWithSamples() // this is a map subject -> map of samples
+	def patWithSamples = jsonMap.pats_with_samples
 	patWithSamples.each {
 		println "subject code is $it.key"
 		it.value.each { samplesMap ->
 			println "$samplesMap.key has $samplesMap.value answers"
 		}
 	}
+
+	def deletions = jsonMap.rows_affected
 	println "** Subjects deleted: $deletions **"
 }
+
 
 
 def testDelInterviews () {
@@ -133,14 +140,14 @@ def testDelInterviews () {
 
 
 	def fuckMap = [
-		// '157071001': ['Dieta'],
-		// '157071004':['Dieta'],
+		'157071001': ['Dieta'],
+		'157071004':['Dieta'],
 		'157071005':['QES_Español','Dieta','Calidad_Entrevista'],
-		// '157071026':['Dieta'],
-		// '157071027':['Dieta'],
+		'157071026':['Dieta'],
+		'157071027':['Dieta'],
 		'157071068':['QES_Español'],
-		// '157072023':['Calidad_Entrevista'],
-		// '157072025':['Calidad_Entrevista'],
+		'157072023':['Calidad_Entrevista'],
+		'157072025':['Calidad_Entrevista'],
 		'157072050':['QES_Español'],
 		'157072202':['QES_Español']
 	]
@@ -162,7 +169,7 @@ def testDelInterviews () {
 */
 
 	FixingTasksHub fs = new FixingTasksHub()
-	Map jsonMap = fs.deleteInterviews('localhost', 'gcomesana', 'appform', false, fuckMap);
+	Map jsonMap = fs.deleteInterviews('localhost', 'gcomesana', 'appform', true, fuckMap);
 /*
 	def totalRowsDeleted = task.performTask(sqlObj, {})
 	def patsWithSamples = task.getPatientsWithSamples()
@@ -171,8 +178,30 @@ def testDelInterviews () {
 	jsonMap.each {
 		println "** ${it.key} => ${it.value}"
 	}
-	// println "totalRows: $totalRowsDeleted; pats with samples: $patsWithSamples; interviews removed: $interviewsDel\n"
+	// println "totalRows: $totalRowsDeleted; pats with samples: $patsWithSamples; interviews removed: $interviewsDel\n" 
+}
 
+
+
+def testChangePatsCode () {
+	def patcodesMap = [
+		"157072005":"157072017",
+		"157072008":"157072048",
+		"157072031":"157072053",
+		"157072012":"157072056",
+		"157072025":"157072072",
+		"157072029":"157072074",
+		"157072019":"157072073",
+		"157072030":"157072084",
+		"157072020":"157072080"]
+
+	FixingTasksHub fs = new FixingTasksHub()
+	def jsonMap = fs.changeSubjecsCode('localhost', 'gcomesana',
+													'appform', true, patcodesMap)
+
+	jsonMap.each {
+		println "** ${it.key} => ${it.value}"
+	}
 }
 
 
@@ -184,8 +213,10 @@ testNumPatients()
 testAnswers4Pats ()
 testPgaRows ()
 */
-// testDelPatients()
 
-testDelInterviews()
+testDelPatients()
+testDelInterviews ()
+testChangePatsCode()
+
 println "\nSe finé\n"
 setDown()

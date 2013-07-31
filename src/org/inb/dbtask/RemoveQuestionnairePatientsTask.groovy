@@ -1,7 +1,7 @@
-package dbtask
+package org.inb.dbtask
 
 import groovy.sql.Sql
-import util.DBQuery
+import org.inb.util.DBQuery
 
 /**
  * Created by IntelliJ IDEA.

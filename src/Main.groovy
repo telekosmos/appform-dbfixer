@@ -9,7 +9,7 @@
 
 import groovy.sql.*;
 import java.sql.ResultSet
-import util.QryRow
+import org.inb.util.QryRow
 
 
 

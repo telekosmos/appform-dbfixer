@@ -6,7 +6,7 @@
  * To change this template use File | Settings | File Templates.
  */
 
-import dbtask.RemoveMultAnsByDateDBTask
+import org.inb.dbtask.RemoveMultAnsByDateDBTask
 import groovy.sql.Sql
 
 public class SqlFixerMain {
