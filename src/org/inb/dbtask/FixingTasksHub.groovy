@@ -159,9 +159,9 @@ class FixingTasksHub {
 		def interviewsDel = task.getInterviewsDeleted()
 
 		def jsonOut = [
-			rows_affected: totalRowsDeleted,
-			pats_with_samples: patsWithSamples,
-			interviews_deleted: interviewsDel
+			rows_affected: totalRowsDeleted, // rows_affected -> 2008
+			pats_with_samples: patsWithSamples, // pats_with_samples -> 157001002:[samples]
+			interviews_deleted: interviewsDel // interviews_deleted -> 10
 		]
 		jsonOut
 	}

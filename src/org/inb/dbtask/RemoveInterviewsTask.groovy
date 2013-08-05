@@ -33,7 +33,8 @@ class RemoveInterviewsTask extends AbstractDBTask {
 
     this.patientsWithSamples = [:] // patients with samples for QES interview
 //	  this.patientsDeleted = 0
-	  this.interviewsDeleted = 0
+//	  this.interviewsDeleted = 0
+	  this.interviewsDeleted = []
 
 	  this.dbQuery = new DBQuery()
 /*
@@ -129,7 +130,7 @@ class RemoveInterviewsTask extends AbstractDBTask {
 								totalRowsAffected += this.dbQuery.deleteIntrvAnswers(answerIds)
 								// println "** ================= **"
 							}
-						this.interviewsDeleted++
+						this.interviewsDeleted << intrv
 
 					}
 					println "$codPat ($intrv) -> performances: ${performances.size()} is $aPerf && answers: ${answers.size()}"

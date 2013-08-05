@@ -7,55 +7,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="a07384d7-56c2-4098-a322-0be34bef6868" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/org/inb/dbtask/FixingTasksHub.groovy" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/dbtask/.FixingTasksHub.groovy.swp" afterPath="" />
-      <change type="DELETED" beforePath="$PROJECT_DIR$/src/dbtask/FixingTasksHub.groovy" afterPath="" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/dbtask/.svn/all-wcprops" afterPath="$PROJECT_DIR$/src/org/inb/dbtask/.svn/all-wcprops" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/dbtask/.svn/entries" afterPath="$PROJECT_DIR$/src/org/inb/dbtask/.svn/entries" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/dbtask/.svn/text-base/AbstractDBTask.groovy.svn-base" afterPath="$PROJECT_DIR$/src/org/inb/dbtask/.svn/text-base/AbstractDBTask.groovy.svn-base" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/dbtask/.svn/text-base/QryRow.groovy.svn-base" afterPath="$PROJECT_DIR$/src/org/inb/dbtask/.svn/text-base/QryRow.groovy.svn-base" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/dbtask/.svn/text-base/RemoveMultAnsByDateDBTask.groovy.svn-base" afterPath="$PROJECT_DIR$/src/org/inb/dbtask/.svn/text-base/RemoveMultAnsByDateDBTask.groovy.svn-base" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/dbtask/.svn/text-base/RemoveMultAnsDBTask.groovy.svn-base" afterPath="$PROJECT_DIR$/src/org/inb/dbtask/.svn/text-base/RemoveMultAnsDBTask.groovy.svn-base" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/dbtask/AbstractDBTask.groovy" afterPath="$PROJECT_DIR$/src/org/inb/dbtask/AbstractDBTask.groovy" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/dbtask/QryRow.groovy" afterPath="$PROJECT_DIR$/src/org/inb/dbtask/QryRow.groovy" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/dbtask/RemoveInterviewsTask.groovy" afterPath="$PROJECT_DIR$/src/org/inb/dbtask/RemoveInterviewsTask.groovy" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/dbtask/RemoveMultAnsByDateDBTask$_deletionRule_closure1.class" afterPath="$PROJECT_DIR$/src/org/inb/dbtask/RemoveMultAnsByDateDBTask$_deletionRule_closure1.class" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/dbtask/RemoveMultAnsByDateDBTask$_deletionRule_closure2.class" afterPath="$PROJECT_DIR$/src/org/inb/dbtask/RemoveMultAnsByDateDBTask$_deletionRule_closure2.class" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/dbtask/RemoveMultAnsByDateDBTask$_deletionRule_closure3.class" afterPath="$PROJECT_DIR$/src/org/inb/dbtask/RemoveMultAnsByDateDBTask$_deletionRule_closure3.class" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/dbtask/RemoveMultAnsByDateDBTask$_deletionRule_closure4.class" afterPath="$PROJECT_DIR$/src/org/inb/dbtask/RemoveMultAnsByDateDBTask$_deletionRule_closure4.class" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/dbtask/RemoveMultAnsByDateDBTask$_deletionRule_closure5.class" afterPath="$PROJECT_DIR$/src/org/inb/dbtask/RemoveMultAnsByDateDBTask$_deletionRule_closure5.class" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/dbtask/RemoveMultAnsByDateDBTask$_deletionRule_closure6.class" afterPath="$PROJECT_DIR$/src/org/inb/dbtask/RemoveMultAnsByDateDBTask$_deletionRule_closure6.class" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/dbtask/RemoveMultAnsByDateDBTask$_deletionRule_closure6_closure8.class" afterPath="$PROJECT_DIR$/src/org/inb/dbtask/RemoveMultAnsByDateDBTask$_deletionRule_closure6_closure8.class" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/dbtask/RemoveMultAnsByDateDBTask$_performTask_closure7.class" afterPath="$PROJECT_DIR$/src/org/inb/dbtask/RemoveMultAnsByDateDBTask$_performTask_closure7.class" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/dbtask/RemoveMultAnsByDateDBTask.class" afterPath="$PROJECT_DIR$/src/org/inb/dbtask/RemoveMultAnsByDateDBTask.class" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/dbtask/RemoveMultAnsByDateDBTask.groovy" afterPath="$PROJECT_DIR$/src/org/inb/dbtask/RemoveMultAnsByDateDBTask.groovy" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/dbtask/RemoveMultAnsDBTask$_performTask_closure1.class" afterPath="$PROJECT_DIR$/src/org/inb/dbtask/RemoveMultAnsDBTask$_performTask_closure1.class" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/dbtask/RemoveMultAnsDBTask$_performTask_closure2.class" afterPath="$PROJECT_DIR$/src/org/inb/dbtask/RemoveMultAnsDBTask$_performTask_closure2.class" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/dbtask/RemoveMultAnsDBTask$_performTask_closure2_closure10.class" afterPath="$PROJECT_DIR$/src/org/inb/dbtask/RemoveMultAnsDBTask$_performTask_closure2_closure10.class" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/dbtask/RemoveMultAnsDBTask$_performTask_closure2_closure10_closure15.class" afterPath="$PROJECT_DIR$/src/org/inb/dbtask/RemoveMultAnsDBTask$_performTask_closure2_closure10_closure15.class" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/dbtask/RemoveMultAnsDBTask$_performTask_closure2_closure10_closure15_closure16.class" afterPath="$PROJECT_DIR$/src/org/inb/dbtask/RemoveMultAnsDBTask$_performTask_closure2_closure10_closure15_closure16.class" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/dbtask/RemoveMultAnsDBTask$_performTask_closure2_closure3.class" afterPath="$PROJECT_DIR$/src/org/inb/dbtask/RemoveMultAnsDBTask$_performTask_closure2_closure3.class" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/dbtask/RemoveMultAnsDBTask$_performTask_closure2_closure4.class" afterPath="$PROJECT_DIR$/src/org/inb/dbtask/RemoveMultAnsDBTask$_performTask_closure2_closure4.class" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/dbtask/RemoveMultAnsDBTask$_performTask_closure2_closure5.class" afterPath="$PROJECT_DIR$/src/org/inb/dbtask/RemoveMultAnsDBTask$_performTask_closure2_closure5.class" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/dbtask/RemoveMultAnsDBTask$_performTask_closure2_closure6.class" afterPath="$PROJECT_DIR$/src/org/inb/dbtask/RemoveMultAnsDBTask$_performTask_closure2_closure6.class" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/dbtask/RemoveMultAnsDBTask$_performTask_closure2_closure7.class" afterPath="$PROJECT_DIR$/src/org/inb/dbtask/RemoveMultAnsDBTask$_performTask_closure2_closure7.class" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/dbtask/RemoveMultAnsDBTask$_performTask_closure2_closure8.class" afterPath="$PROJECT_DIR$/src/org/inb/dbtask/RemoveMultAnsDBTask$_performTask_closure2_closure8.class" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/dbtask/RemoveMultAnsDBTask$_performTask_closure2_closure8_closure11.class" afterPath="$PROJECT_DIR$/src/org/inb/dbtask/RemoveMultAnsDBTask$_performTask_closure2_closure8_closure11.class" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/dbtask/RemoveMultAnsDBTask$_performTask_closure2_closure8_closure11_closure12.class" afterPath="$PROJECT_DIR$/src/org/inb/dbtask/RemoveMultAnsDBTask$_performTask_closure2_closure8_closure11_closure12.class" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/dbtask/RemoveMultAnsDBTask$_performTask_closure2_closure9.class" afterPath="$PROJECT_DIR$/src/org/inb/dbtask/RemoveMultAnsDBTask$_performTask_closure2_closure9.class" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/dbtask/RemoveMultAnsDBTask$_performTask_closure2_closure9_closure13.class" afterPath="$PROJECT_DIR$/src/org/inb/dbtask/RemoveMultAnsDBTask$_performTask_closure2_closure9_closure13.class" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/dbtask/RemoveMultAnsDBTask$_performTask_closure2_closure9_closure13_closure14.class" afterPath="$PROJECT_DIR$/src/org/inb/dbtask/RemoveMultAnsDBTask$_performTask_closure2_closure9_closure13_closure14.class" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/dbtask/RemoveMultAnsDBTask.class" afterPath="$PROJECT_DIR$/src/org/inb/dbtask/RemoveMultAnsDBTask.class" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/dbtask/RemoveMultAnsDBTask.groovy" afterPath="$PROJECT_DIR$/src/org/inb/dbtask/RemoveMultAnsDBTask.groovy" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/dbtask/RemovePatientsTask.groovy" afterPath="$PROJECT_DIR$/src/org/inb/dbtask/RemovePatientsTask.groovy" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/dbtask/RemoveQuestionnairePatientsTask.groovy" afterPath="$PROJECT_DIR$/src/org/inb/dbtask/RemoveQuestionnairePatientsTask.groovy" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/util/DBQuery.groovy" afterPath="$PROJECT_DIR$/src/org/inb/util/DBQuery.groovy" />
-      <change type="MOVED" beforePath="$PROJECT_DIR$/src/util/QryRow.groovy" afterPath="$PROJECT_DIR$/src/org/inb/util/QryRow.groovy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/FixAnswersScript.groovy" afterPath="$PROJECT_DIR$/src/FixAnswersScript.groovy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/FixScript.groovy" afterPath="$PROJECT_DIR$/src/FixScript.groovy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Main.groovy" afterPath="$PROJECT_DIR$/src/Main.groovy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/test/RemovePatientsTaskTest.groovy" afterPath="$PROJECT_DIR$/src/test/RemovePatientsTaskTest.groovy" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/SqlFixerMain.groovy" afterPath="$PROJECT_DIR$/src/SqlFixerMain.groovy" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/inb/dbtask/FixingTasksHub.groovy" afterPath="$PROJECT_DIR$/src/org/inb/dbtask/FixingTasksHub.groovy" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/org/inb/dbtask/RemoveInterviewsTask.groovy" afterPath="$PROJECT_DIR$/src/org/inb/dbtask/RemoveInterviewsTask.groovy" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/SqlRunner.iws" afterPath="$PROJECT_DIR$/SqlRunner.iws" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/Test.groovy" afterPath="$PROJECT_DIR$/src/Test.groovy" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TestSqlRunnerJar.java" afterPath="$PROJECT_DIR$/TestSqlRunnerJar.java" />
     </list>
@@ -64,7 +18,7 @@
     <file path="/FixScript.groovy" changelist="a07384d7-56c2-4098-a322-0be34bef6868" time="1371478246147" ignored="false" />
     <file path="/fragment.java" changelist="a07384d7-56c2-4098-a322-0be34bef6868" time="1375195443012" ignored="false" />
     <file path="/RemoveMultAnsByDateDBTask.groovy" changelist="a07384d7-56c2-4098-a322-0be34bef6868" time="1372416151047" ignored="false" />
-    <file path="/TestSqlRunnerJar.java" changelist="a07384d7-56c2-4098-a322-0be34bef6868" time="1375197129684" ignored="false" />
+    <file path="/TestSqlRunnerJar.java" changelist="a07384d7-56c2-4098-a322-0be34bef6868" time="1375713637014" ignored="false" />
     <file path="/FixTasks.groovy" changelist="a07384d7-56c2-4098-a322-0be34bef6868" time="1373878567831" ignored="false" />
     <file path="/Main.groovy" changelist="a07384d7-56c2-4098-a322-0be34bef6868" time="1371487367340" ignored="false" />
     <file path="/a.dummy" changelist="a07384d7-56c2-4098-a322-0be34bef6868" time="1372867976394" ignored="false" />
@@ -75,10 +29,10 @@
     <file path="/RemoveMultAnsDBTask.groovy" changelist="a07384d7-56c2-4098-a322-0be34bef6868" time="1372416126642" ignored="false" />
     <file path="/Test.groovy" changelist="a07384d7-56c2-4098-a322-0be34bef6868" time="1374052884331" ignored="false" />
     <file path="/QryRow.groovy" changelist="a07384d7-56c2-4098-a322-0be34bef6868" time="1372161054376" ignored="false" />
-    <file path="/RemoveInterviewsTask.groovy" changelist="a07384d7-56c2-4098-a322-0be34bef6868" time="1374051418183" ignored="false" />
-    <file path="/Dummy.txt" changelist="a07384d7-56c2-4098-a322-0be34bef6868" time="1375260875970" ignored="false" />
+    <file path="/RemoveInterviewsTask.groovy" changelist="a07384d7-56c2-4098-a322-0be34bef6868" time="1375704286472" ignored="false" />
+    <file path="/Dummy.txt" changelist="a07384d7-56c2-4098-a322-0be34bef6868" time="1375702788792" ignored="false" />
     <file path="/RemoveQuestionnairePatientsTask.groovy" changelist="a07384d7-56c2-4098-a322-0be34bef6868" time="1372416229226" ignored="false" />
-    <file path="/FixingTasksHub.groovy" changelist="a07384d7-56c2-4098-a322-0be34bef6868" time="1375196348644" ignored="false" />
+    <file path="/FixingTasksHub.groovy" changelist="a07384d7-56c2-4098-a322-0be34bef6868" time="1375703791695" ignored="false" />
     <file path="/ChangeSubjectsCodeTask.groovy" changelist="a07384d7-56c2-4098-a322-0be34bef6868" time="1374056462551" ignored="false" />
     <file path="$PROJECT_DIR$/scripts/FixAnswersScript.groovy" changelist="a07384d7-56c2-4098-a322-0be34bef6868" time="1375196334264" ignored="false" />
     <option name="TRACKING_ENABLED" value="true" />
@@ -199,7 +153,7 @@
         <option name="CONDITION" value="" />
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
-      <breakpoint url="file://$PROJECT_DIR$/src/org/inb/dbtask/RemoveInterviewsTask.groovy" line="141" class="org.inb.dbtask.RemoveInterviewsTask" package="org.inb.dbtask">
+      <breakpoint url="file://$PROJECT_DIR$/TestSqlRunnerJar.java" line="93" class="TestSqlRunnerJar" package="">
         <option name="ENABLED" value="true" />
         <option name="LOG_ENABLED" value="false" />
         <option name="LOG_EXPRESSION_ENABLED" value="false" />
@@ -213,35 +167,7 @@
         <option name="CONDITION" value="" />
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
-      <breakpoint url="file://$PROJECT_DIR$/src/org/inb/dbtask/RemoveInterviewsTask.groovy" line="135" class="org.inb.dbtask.RemoveInterviewsTask" package="org.inb.dbtask">
-        <option name="ENABLED" value="true" />
-        <option name="LOG_ENABLED" value="false" />
-        <option name="LOG_EXPRESSION_ENABLED" value="false" />
-        <option name="SUSPEND_POLICY" value="SuspendAll" />
-        <option name="SUSPEND" value="true" />
-        <option name="COUNT_FILTER_ENABLED" value="false" />
-        <option name="COUNT_FILTER" value="0" />
-        <option name="CONDITION_ENABLED" value="true" />
-        <option name="CLASS_FILTERS_ENABLED" value="false" />
-        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
-        <option name="CONDITION" value="" />
-        <option name="LOG_MESSAGE" value="" />
-      </breakpoint>
-      <breakpoint url="file://$PROJECT_DIR$/TestSqlRunnerJar.java" line="89" class="TestSqlRunnerJar" package="">
-        <option name="ENABLED" value="true" />
-        <option name="LOG_ENABLED" value="false" />
-        <option name="LOG_EXPRESSION_ENABLED" value="false" />
-        <option name="SUSPEND_POLICY" value="SuspendAll" />
-        <option name="SUSPEND" value="true" />
-        <option name="COUNT_FILTER_ENABLED" value="false" />
-        <option name="COUNT_FILTER" value="0" />
-        <option name="CONDITION_ENABLED" value="true" />
-        <option name="CLASS_FILTERS_ENABLED" value="false" />
-        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
-        <option name="CONDITION" value="" />
-        <option name="LOG_MESSAGE" value="" />
-      </breakpoint>
-      <breakpoint url="file://$PROJECT_DIR$/src/org/inb/dbtask/RemoveInterviewsTask.groovy" line="99" class="org.inb.dbtask.RemoveInterviewsTask" package="org.inb.dbtask">
+      <breakpoint url="file://$PROJECT_DIR$/src/org/inb/dbtask/RemoveInterviewsTask.groovy" line="100" class="org.inb.dbtask.RemoveInterviewsTask" package="org.inb.dbtask">
         <option name="ENABLED" value="true" />
         <option name="LOG_ENABLED" value="false" />
         <option name="LOG_EXPRESSION_ENABLED" value="false" />
@@ -270,6 +196,20 @@
         <option name="LOG_MESSAGE" value="" />
       </breakpoint>
       <breakpoint url="file://$PROJECT_DIR$/src/Test.groovy" line="107" class="Test.groovy" package="">
+        <option name="ENABLED" value="true" />
+        <option name="LOG_ENABLED" value="false" />
+        <option name="LOG_EXPRESSION_ENABLED" value="false" />
+        <option name="SUSPEND_POLICY" value="SuspendAll" />
+        <option name="SUSPEND" value="true" />
+        <option name="COUNT_FILTER_ENABLED" value="false" />
+        <option name="COUNT_FILTER" value="0" />
+        <option name="CONDITION_ENABLED" value="true" />
+        <option name="CLASS_FILTERS_ENABLED" value="false" />
+        <option name="INSTANCE_FILTERS_ENABLED" value="false" />
+        <option name="CONDITION" value="" />
+        <option name="LOG_MESSAGE" value="" />
+      </breakpoint>
+      <breakpoint url="file://$PROJECT_DIR$/src/org/inb/dbtask/FixingTasksHub.groovy" line="165" class="org.inb.dbtask.FixingTasksHub" package="org.inb.dbtask">
         <option name="ENABLED" value="true" />
         <option name="LOG_ENABLED" value="false" />
         <option name="LOG_EXPRESSION_ENABLED" value="false" />
@@ -330,7 +270,7 @@
       <file leaf-file-name="DBQuery.groovy" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/org/inb/util/DBQuery.groovy">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="272" column="6" selection-start="7246" selection-end="7246" vertical-scroll-proportion="0.0">
+            <state line="202" column="0" selection-start="4989" selection-end="4989" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -339,7 +279,7 @@
       <file leaf-file-name="RemoveInterviewsTask.groovy" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/org/inb/dbtask/RemoveInterviewsTask.groovy">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="127" column="58" selection-start="4397" selection-end="4397" vertical-scroll-proportion="0.0">
+            <state line="132" column="43" selection-start="4604" selection-end="4604" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -354,12 +294,13 @@
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="TestSqlRunnerJar.java" pinned="false" current="false" current-in-tab="false">
+      <file leaf-file-name="TestSqlRunnerJar.java" pinned="false" current="true" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/TestSqlRunnerJar.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="42" column="52" selection-start="1329" selection-end="1329" vertical-scroll-proportion="0.0">
+            <state line="119" column="31" selection-start="4123" selection-end="4123" vertical-scroll-proportion="0.67536235">
               <folding>
-                <element signature="imports" expanded="true" />
+                <element signature="e#1927#1954#0" expanded="true" />
+                <element signature="e#5177#5185#0" expanded="true" />
               </folding>
             </state>
           </provider>
@@ -368,16 +309,25 @@
       <file leaf-file-name="FixingTasksHub.groovy" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/org/inb/dbtask/FixingTasksHub.groovy">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="23" column="46" selection-start="349" selection-end="349" vertical-scroll-proportion="0.0">
+            <state line="155" column="77" selection-start="4974" selection-end="4974" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="RemovePatientsTask.groovy" pinned="false" current="true" current-in-tab="true">
+      <file leaf-file-name="Test.groovy" pinned="false" current="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/Test.groovy">
+          <provider selected="true" editor-type-id="text-editor">
+            <state line="218" column="3" selection-start="5196" selection-end="5196" vertical-scroll-proportion="0.0">
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="RemovePatientsTask.groovy" pinned="false" current="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/org/inb/dbtask/RemovePatientsTask.groovy">
           <provider selected="true" editor-type-id="text-editor">
-            <state line="155" column="65" selection-start="4236" selection-end="4236" vertical-scroll-proportion="0.23026316">
+            <state line="163" column="59" selection-start="4515" selection-end="4522" vertical-scroll-proportion="0.0">
               <folding />
             </state>
           </provider>
@@ -401,8 +351,6 @@
   <component name="IdeDocumentHistory">
     <option name="changedFiles">
       <list>
-        <option value="$PROJECT_DIR$/src/util/QryRow.groovy" />
-        <option value="$PROJECT_DIR$/src/FixAnswersScript.groovy" />
         <option value="$PROJECT_DIR$/src/dbtask/RemoveInterviews.groovy" />
         <option value="$PROJECT_DIR$/src/dbtask/AbstractDBTask.groovy" />
         <option value="$PROJECT_DIR$/src/dbtask/RemoveMultAnsDBTask.groovy" />
@@ -410,12 +358,14 @@
         <option value="$PROJECT_DIR$/src/dbtask/RemoveQuestionnairePatientsTask.groovy" />
         <option value="$PROJECT_DIR$/src/dbtask/FixTasks.groovy" />
         <option value="$PROJECT_DIR$/src/dbtask/RemoveInterviewsTask.groovy" />
-        <option value="$PROJECT_DIR$/src/Test.groovy" />
         <option value="$PROJECT_DIR$/src/dbtask/ChangeSubjectsCodeTask.groovy" />
         <option value="$PROJECT_DIR$/src/util/DBQuery.groovy" />
         <option value="$PROJECT_DIR$/src/dbtask/RemovePatientsTask.groovy" />
         <option value="$PROJECT_DIR$/src/dbtask/FixingTasksHub.groovy" />
+        <option value="$PROJECT_DIR$/src/org/inb/dbtask/RemovePatientsTask.groovy" />
+        <option value="$PROJECT_DIR$/src/Test.groovy" />
         <option value="$PROJECT_DIR$/src/org/inb/dbtask/FixingTasksHub.groovy" />
+        <option value="$PROJECT_DIR$/src/org/inb/dbtask/RemoveInterviewsTask.groovy" />
         <option value="$PROJECT_DIR$/TestSqlRunnerJar.java" />
       </list>
     </option>
@@ -577,11 +527,11 @@
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="options.splitter.main.proportions" value="0.3" />
-    <property name="MemberChooser.sorted" value="false" />
-    <property name="recentsLimit" value="5" />
     <property name="GenerateAntBuildDialog.generateSingleFile" value="false" />
-    <property name="last_opened_file_path" value="/usr/local/groovy-1.8.6/lib/jsp-api-2.0.jar" />
+    <property name="recentsLimit" value="5" />
+    <property name="MemberChooser.sorted" value="false" />
     <property name="GenerateAntBuildDialog.inclineRuntiemClasspath" value="false" />
+    <property name="last_opened_file_path" value="/usr/local/groovy-1.8.6/lib/jsp-api-2.0.jar" />
     <property name="GenerateAntBuildDialog.outputFileNameProperty" value="sqlrunner" />
     <property name="GenerateAntBuildDialog.enableUiFormCompile" value="true" />
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
@@ -597,8 +547,8 @@
     <property name="MemberChooser.copyJavadoc" value="false" />
     <property name="restartRequiresConfirmation" value="true" />
     <property name="GenerateAntBuildDialog.backupFiles" value="true" />
-    <property name="options.searchVisible" value="true" />
     <property name="dynamic.classpath" value="false" />
+    <property name="options.searchVisible" value="true" />
   </component>
   <component name="RecentsManager">
     <key name="MoveFile.RECENT_KEYS">
@@ -608,7 +558,7 @@
       <recent name="org.inb" />
     </key>
   </component>
-  <component name="RunManager" selected="Application.TestSqlRunnerJar">
+  <component name="RunManager" selected="Groovy.Test">
     <configuration default="false" name="FixScript" type="GroovyScriptRunConfiguration" factoryName="Groovy" temporary="true">
       <module name="SqlRunner" />
       <setting name="path" value="$PROJECT_DIR$/src/FixScript.groovy" />
@@ -757,8 +707,8 @@
     </list>
     <recent_temporary>
       <list size="2">
-        <item index="0" class="java.lang.String" itemvalue="Application.TestSqlRunnerJar" />
-        <item index="1" class="java.lang.String" itemvalue="Groovy.Test" />
+        <item index="0" class="java.lang.String" itemvalue="Groovy.Test" />
+        <item index="1" class="java.lang.String" itemvalue="Application.TestSqlRunnerJar" />
       </list>
     </recent_temporary>
     <configuration name="&lt;template&gt;" type="WebApp" default="true" selected="false">
@@ -829,12 +779,12 @@
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.1875" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.2451923" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23959151" sideWeight="0.767418" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.23959151" sideWeight="0.7961066" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24980362" sideWeight="0.767418" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.20389344" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.24980362" sideWeight="0.7961066" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.20389344" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
       <window_info id="Phing Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
@@ -955,30 +905,9 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/Test.groovy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="11" column="51" selection-start="350" selection-end="350" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/inb/dbtask/RemoveInterviewsTask.groovy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="127" column="58" selection-start="4397" selection-end="4397" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/org/inb/dbtask/ChangeSubjectsCodeTask.groovy">
       <provider selected="true" editor-type-id="text-editor">
         <state line="101" column="39" selection-start="3514" selection-end="3514" vertical-scroll-proportion="0.0">
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/inb/util/DBQuery.groovy">
-      <provider selected="true" editor-type-id="text-editor">
-        <state line="272" column="6" selection-start="7246" selection-end="7246" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
@@ -988,26 +917,48 @@
         <state line="6" column="19" selection-start="158" selection-end="158" vertical-scroll-proportion="0.07874016" />
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/TestSqlRunnerJar.java">
+    <entry file="file://$PROJECT_DIR$/src/org/inb/dbtask/RemovePatientsTask.groovy">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="42" column="52" selection-start="1329" selection-end="1329" vertical-scroll-proportion="0.0">
-          <folding>
-            <element signature="imports" expanded="true" />
-          </folding>
+        <state line="163" column="59" selection-start="4515" selection-end="4522" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/inb/util/DBQuery.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="202" column="0" selection-start="4989" selection-end="4989" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/Test.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="218" column="3" selection-start="5196" selection-end="5196" vertical-scroll-proportion="0.0">
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/org/inb/dbtask/RemoveInterviewsTask.groovy">
+      <provider selected="true" editor-type-id="text-editor">
+        <state line="132" column="43" selection-start="4604" selection-end="4604" vertical-scroll-proportion="0.0">
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/org/inb/dbtask/FixingTasksHub.groovy">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="23" column="46" selection-start="349" selection-end="349" vertical-scroll-proportion="0.0">
+        <state line="155" column="77" selection-start="4974" selection-end="4974" vertical-scroll-proportion="0.0">
           <folding />
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/org/inb/dbtask/RemovePatientsTask.groovy">
+    <entry file="file://$PROJECT_DIR$/TestSqlRunnerJar.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state line="155" column="65" selection-start="4236" selection-end="4236" vertical-scroll-proportion="0.23026316">
-          <folding />
+        <state line="119" column="31" selection-start="4123" selection-end="4123" vertical-scroll-proportion="0.67536235">
+          <folding>
+            <element signature="e#1927#1954#0" expanded="true" />
+            <element signature="e#5177#5185#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

@@ -11,6 +11,10 @@ import java.lang.Integer;
 import java.lang.String;
 import java.lang.System;
 import java.util.*;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
 /*
 import java.org.inb.util.ArrayList;
 
@@ -43,10 +47,10 @@ public class TestSqlRunnerJar {
 
     try {
       System.out.println("Test 1: DELETE PATIENTS");
-      tsj.delPatientsTest(dbq);
+      // tsj.delPatientsTest(dbq);
 
       System.out.println("\nTest 2: DELETE INTERVIEWS");
-      // tsj.delInterviews();
+      tsj.delInterviews();
 
       System.out.println("\nTest 3: CHANGE PATIENTS");
       // tsj.changePatientCodes();
@@ -72,17 +76,17 @@ public class TestSqlRunnerJar {
 
     hashMap.put("157071001", new ArrayList<String>(Arrays.asList("Dieta")));
     hashMap.put("157071004", new ArrayList<String>(Arrays.asList("Dieta")));
-    // hashMap.put("157071005", new ArrayList<String>(Arrays.asList(qes, "Dieta", "Calidad_Entrevista")));
+    hashMap.put("157071005", new ArrayList<String>(Arrays.asList(qes, "Dieta", "Calidad_Entrevista")));
     hashMap.put("157071026", new ArrayList<String>(Arrays.asList("Dieta")));
     hashMap.put("157071027", new ArrayList<String>(Arrays.asList("Dieta")));
-    hashMap.put("157071068", new ArrayList<String>(Arrays.asList(qes)));
+    // hashMap.put("157071068", new ArrayList<String>(Arrays.asList(qes)));
 
     hashMap.put("157072023", new ArrayList<String>(Arrays.asList("Calidad_Entrevista")));
     hashMap.put("157072025", new ArrayList<String>(Arrays.asList("Calidad_Entrevista")));
     // hashMap.put("157072050", new ArrayList<String>(Arrays.asList(qes)));
     // hashMap.put("157072202", new ArrayList<String>(Arrays.asList(qes)));
 
-		boolean simulation = false;
+		boolean simulation = true;
     FixingTasksHub fs = new FixingTasksHub();
     HashMap<String, Object> jsonMap =
       (HashMap<String, Object>) fs.deleteInterviews(
@@ -91,13 +95,45 @@ public class TestSqlRunnerJar {
         TestSqlRunnerJar.DEFAULT_DB_PASS,
         simulation, hashMap);
 
+
+
+
+    String jsonOut = "{\"rows_affected\": "+jsonMap.get("rows_affected").toString()+",";
+    jsonOut += "\"samples\": [";
+
+    HashMap patSamples = (HashMap)jsonMap.get("pats_with_samples");
+    List samples = new ArrayList();
+    samples.addAll(patSamples.values());
+
+
+    Iterator sampleIt = samples.iterator();
+    while (sampleIt.hasNext()) {
+      jsonOut += sampleIt.next().toString()+",";
+    }
+    jsonOut = samples.size()>0? jsonOut.substring(0, jsonOut.length()-1): jsonOut;
+    jsonOut += "], \"interviews_deleted\":[";
+
+
+    List deletedOnes = (List)jsonMap.get("interviews_deleted");
+    Iterator deletedIt = deletedOnes.iterator();
+    while (deletedIt.hasNext()) {
+      jsonOut += "\""+deletedIt.next().toString()+"\",";
+    }
+    jsonOut = deletedOnes.size()>0? jsonOut.substring(0, jsonOut.length()-1):jsonOut;
+
+    jsonOut += "]}";
+
+    System.out.println("DeleteInterviews:\n"+jsonOut);
+    /*
     Iterator it = jsonMap.entrySet().iterator();
     while (it.hasNext()) {
       Map.Entry pairs = (Map.Entry) it.next();
       System.out.println("** " + pairs.getKey() + " => " + pairs.getValue());
       it.remove(); // avoids a ConcurrentModificationException
     }
+    */
   }
+
 
 
   public void delPatientsTest(DBQuery dbq) {

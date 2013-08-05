@@ -214,9 +214,9 @@ testAnswers4Pats ()
 testPgaRows ()
 */
 
-testDelPatients()
+// testDelPatients()
 testDelInterviews ()
-testChangePatsCode()
+// testChangePatsCode()
 
 println "\nSe finé\n"
 setDown()
