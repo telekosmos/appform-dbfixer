@@ -10,6 +10,10 @@ import org.inb.util.DBQuery
 class RemoveInterviewsTask extends AbstractDBTask {
 	private DBQuery dbQuery
 
+	/**
+	 * Associative array where the keys are the patient code and, the values,
+	 * an array with the INTERVIEW IDs as interview names are not unique!!
+	 */
 	def patientsIntrvs = [:]
 //  def patientsRows = [:]
 
@@ -88,6 +92,7 @@ class RemoveInterviewsTask extends AbstractDBTask {
 
 				def rsSamples = [:]
 				def isConstraintSatisfied = { -> // constraint: interviewName == QES and no samples for patient
+					// def intrvName = this.dbQuery.getQuestionnaireNameFromId(intrv)
 					if (intrv.indexOf('QES') != -1) {
 						println "Checking for QES samples for $codPat"
 						rsSamples = dbQuery.getSamples4Patient(codPat)
@@ -130,9 +135,9 @@ class RemoveInterviewsTask extends AbstractDBTask {
 								totalRowsAffected += this.dbQuery.deleteIntrvAnswers(answerIds)
 								// println "** ================= **"
 							}
-						this.interviewsDeleted << intrv
-
+						this.interviewsDeleted << [codPat,intrv]
 					}
+
 					println "$codPat ($intrv) -> performances: ${performances.size()} is $aPerf && answers: ${answers.size()}"
 					println "** ================= **"
 				}

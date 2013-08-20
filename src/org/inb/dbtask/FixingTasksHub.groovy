@@ -27,6 +27,7 @@ class FixingTasksHub {
 		this.dbUrl = dbUrl
 		this.dbUser = dbUsr
 		this.dbPasswd = dbPass
+		println("DBConn params: ${this.dbUrl}, user: ${this.dbUser}:${this.dbPasswd}")
 	}
 
 	/**
@@ -41,7 +42,8 @@ class FixingTasksHub {
 	def curateAnswers(dbUrl, dbUser, dbPass, simulation) {
 
 		println "Fixing repetad answers for ${dbUrl} for ${dbUser}:${dbPass}..."
-		Sql theSqlConn = Sql.newInstance(dbUrl, dbUser, dbPass, 'org.postgresql.Driver')
+		// Sql theSqlConn = Sql.newInstance(dbUrl, dbUser, dbPass, 'org.postgresql.Driver')
+		Sql theSqlConn = Sql.newInstance(this.dbUrl, this.dbUser, this.dbPasswd, 'org.postgresql.Driver')
 
 		if (theSqlConn != null) {
 
@@ -107,8 +109,9 @@ class FixingTasksHub {
 		def localPort = '4321'
 		localPort = '5432'
 		localPort = dbHost == 'localhost' ? '4321' : '5432'
-		println("FixTasks deletePatients -> dbUrl: jdbc:postgresql://$dbHost:$localPort/appform;")
-		Sql theSqlConn = Sql.newInstance("jdbc:postgresql://$dbHost:$localPort/appform", dbUser, dbPass, 'org.postgresql.Driver')
+		println("FixTasks deletePatients -> dbUrl: ${this.dbUrl}; ${this.dbUser}:${this.dbPasswd}")
+		// Sql theSqlConn = Sql.newInstance("jdbc:postgresql://$dbHost:$localPort/appform", dbUser, dbPass, 'org.postgresql.Driver')
+		Sql theSqlConn = Sql.newInstance(this.dbUrl, this.dbUser, this.dbPasswd, 'org.postgresql.Driver')
 
 		println "About to perform patients deletion " + (simulation ? "(SIMULATION)" : "(live database update!!!)")
 		this.noDeletedPatients = task.getSubjectsWithSamples()
@@ -149,9 +152,8 @@ class FixingTasksHub {
 		localPort = '5432'
 		localPort = dbHost == 'localhost' ? '4321' : '5432'
 		// println ("FixTasks deleteInterviews -> dbUrl: $localUrl; user: $localUser :: $localPass")
-		println("FixTasks deleteInterviews -> dbUrl: jdbc:postgresql://$dbHost:$localPort/appform;")
-		Sql theSqlConn = Sql.newInstance("jdbc:postgresql://$dbHost:$localPort/appform",
-			dbUser, dbPass, 'org.postgresql.Driver')
+		println("FixTasks deleteInterviews -> dbUrl: ${this.dbUrl}; ${this.dbUser}:${this.dbPasswd}")
+		Sql theSqlConn = Sql.newInstance(this.dbUrl, this.dbUser, this.dbPasswd, 'org.postgresql.Driver')
 
 		def task = new RemoveInterviewsTask(interviews: mapInterviews, sim: simulation)
 		def totalRowsDeleted = task.performTask(theSqlConn, {})
@@ -161,7 +163,7 @@ class FixingTasksHub {
 		def jsonOut = [
 			rows_affected: totalRowsDeleted, // rows_affected -> 2008
 			pats_with_samples: patsWithSamples, // pats_with_samples -> 157001002:[samples]
-			interviews_deleted: interviewsDel // interviews_deleted -> 10
+			interviews_deleted: interviewsDel // interviews_deleted -> [[157..., QES...],...]
 		]
 		jsonOut
 	}
@@ -186,9 +188,8 @@ class FixingTasksHub {
 		localPort = '5432'
 		localPort = dbHost == 'localhost' ? '4321' : '5432'
 
-		// println("FixTasks deleteInterviews -> dbUrl: jdbc:postgresql://$dbHost:$localPort/appform;")
-		Sql theSqlConn = Sql.newInstance("jdbc:postgresql://$dbHost:$localPort/appform",
-			dbUser, dbPass, 'org.postgresql.Driver')
+		println("FixTasks changeSubjecsCode -> dbUrl: ${this.dbUrl}; ${this.dbUser}:${this.dbPasswd}")
+		Sql theSqlConn = Sql.newInstance(this.dbUrl, this.dbUser, this.dbPasswd, 'org.postgresql.Driver')
 
 		def task = new ChangeSubjectsCodeTask(patCodes: mapCodes, sim: simulation)
 		def totalRowsDeleted = task.performTask(theSqlConn, {})

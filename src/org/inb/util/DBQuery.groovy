@@ -61,7 +61,6 @@ public class DBQuery {
 	def selAnswersQry = """select a.idanswer, a.thevalue, p.idpat, p.codpatient
     from patient p, pat_gives_answer2ques pga, answer a, question q, item it
     where p.codpatient = ?
-      -- and p.idpat = ?
       and p.idpat = pga.codpat
       and pga.codanswer = a.idanswer
       and pga.codquestion = q.idquestion
@@ -70,7 +69,6 @@ public class DBQuery {
           (select idquestion
            from question q, item i, section s, interview iv, project p
            where 1 = 1 -- s.codinterview = it.idinterview
-             -- and upper(iv.name) = upper(?)
              and p.project_code = ?
              and iv.codprj = p.idprj
              and s.codinterview = iv.idinterview
@@ -110,6 +108,13 @@ public class DBQuery {
 	select idinterview, name
 	from interview i
 	where i.name = ?;
+	"""
+
+
+	def selQuestionnaireFromId = """
+		select idinteriew, name
+		from interview i
+		where i.idinterview = ?;
 	"""
 
 
@@ -278,6 +283,17 @@ public class DBQuery {
 		}
 
 		rows
+	}
+
+	/**
+	 * Returns the name of the questionnaire from the database id
+	 * @param dbId, the database id for the questionnaire
+	 * @return the name of the questionnaire or null if no questionnaire for the parameter dbId
+	 */
+	def getQuestionnaireNameFromId (dbId) {
+		def record = theSqlConn.firstRow(this.selQuestionnaireFromId.replaceFirst('\\?', dbId))
+
+		record.name
 	}
 
 

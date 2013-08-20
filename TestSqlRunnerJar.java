@@ -87,7 +87,10 @@ public class TestSqlRunnerJar {
     // hashMap.put("157072202", new ArrayList<String>(Arrays.asList(qes)));
 
 		boolean simulation = true;
-    FixingTasksHub fs = new FixingTasksHub();
+    FixingTasksHub fs = new FixingTasksHub(TestSqlRunnerJar.DEFAULT_DB_URL,
+      TestSqlRunnerJar.DEFAULT_DB_USR,
+      TestSqlRunnerJar.DEFAULT_DB_PASS);
+
     HashMap<String, Object> jsonMap =
       (HashMap<String, Object>) fs.deleteInterviews(
         TestSqlRunnerJar.DEFAULT_DB_HOST,
@@ -117,7 +120,9 @@ public class TestSqlRunnerJar {
     List deletedOnes = (List)jsonMap.get("interviews_deleted");
     Iterator deletedIt = deletedOnes.iterator();
     while (deletedIt.hasNext()) {
-      jsonOut += "\""+deletedIt.next().toString()+"\",";
+      // jsonOut += "\""+deletedIt.next().toString()+"\",";
+      List pair = (List)deletedIt.next();
+      jsonOut += "{\"codpat\":\""+pair.get(0)+"\", \"intrv\":\""+pair.get(1)+"\"},";
     }
     jsonOut = deletedOnes.size()>0? jsonOut.substring(0, jsonOut.length()-1):jsonOut;
 

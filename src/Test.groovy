@@ -178,7 +178,8 @@ def testDelInterviews () {
 	jsonMap.each {
 		println "** ${it.key} => ${it.value}"
 	}
-	// println "totalRows: $totalRowsDeleted; pats with samples: $patsWithSamples; interviews removed: $interviewsDel\n" 
+
+	// println "totalRows: $totalRowsDeleted; pats with samples: $patsWithSamples; interviews removed: $interviewsDel\n"
 }
 
 
