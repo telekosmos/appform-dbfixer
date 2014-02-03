@@ -108,10 +108,15 @@ class FixingTasksHub {
 		def task = new RemovePatientsTask(patients: listCodsPatient, sim: simulation)
 		def localPort = '4321'
 		localPort = '5432'
-		localPort = dbHost == 'localhost' ? '4321' : '5432'
-		println("FixTasks deletePatients -> dbUrl: ${this.dbUrl}; ${this.dbUser}:${this.dbPasswd}")
-		// Sql theSqlConn = Sql.newInstance("jdbc:postgresql://$dbHost:$localPort/appform", dbUser, dbPass, 'org.postgresql.Driver')
-		Sql theSqlConn = Sql.newInstance(this.dbUrl, this.dbUser, this.dbPasswd, 'org.postgresql.Driver')
+    localPort = dbHost == 'localhost' ? '5432' : '5432'
+    def host = dbHost == null? 'localhost': dbHost
+    def user = dbUser == null? this.dbUser: dbUser
+    def passwd = dbPass == null? this.dbPasswd: dbPass
+    def url = this.dbUrl == null? "jdbc:postgresql://$host:$localPort/appform": this.dbUrl
+
+    // println ("FixTasks deleteInterviews -> dbUrl: $localUrl; user: $localUser :: $localPass")
+    println("FixTasks deleteInterviews -> dbUrl: ${url}; ${user}:${passwd}")
+    Sql theSqlConn = Sql.newInstance(url, user, passwd, 'org.postgresql.Driver')
 
 		println "About to perform patients deletion " + (simulation ? "(SIMULATION)" : "(live database update!!!)")
 		this.noDeletedPatients = task.getSubjectsWithSamples()
@@ -150,10 +155,15 @@ class FixingTasksHub {
 
 		def localPort = '4321'
 		localPort = '5432'
-		localPort = dbHost == 'localhost' ? '4321' : '5432'
+		localPort = dbHost == 'localhost' ? '5432' : '5432'
+    def host = dbHost == null? 'localhost': dbHost
+    def user = dbUser == null? this.dbUser: dbUser
+    def passwd = dbPass == null? this.dbPasswd: dbPass
+    def url = this.dbUrl == null? "jdbc:postgresql://$host:$localPort/appform": this.dbUrl
+
 		// println ("FixTasks deleteInterviews -> dbUrl: $localUrl; user: $localUser :: $localPass")
-		println("FixTasks deleteInterviews -> dbUrl: ${this.dbUrl}; ${this.dbUser}:${this.dbPasswd}")
-		Sql theSqlConn = Sql.newInstance(this.dbUrl, this.dbUser, this.dbPasswd, 'org.postgresql.Driver')
+		println("FixTasks deleteInterviews -> dbUrl: ${url}; ${user}:${passwd}")
+		Sql theSqlConn = Sql.newInstance(url, user, passwd, 'org.postgresql.Driver')
 
 		def task = new RemoveInterviewsTask(interviews: mapInterviews, sim: simulation)
 		def totalRowsDeleted = task.performTask(theSqlConn, {})

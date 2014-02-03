@@ -25,9 +25,9 @@ def rpt = null
 def sqlObj = null
 
 def setUp () {
-
+  println "Setting up tests"
   rpt = new RemovePatientsTask(patients: listPats, simulation: true)
-  String dbUrl = "jdbc:postgresql://localhost:4321/appform"
+  String dbUrl = "jdbc:postgresql://localhost:5432/appform"
   String dbUser = "gcomesana"
   String dbPass = "appform"
 
@@ -106,8 +106,10 @@ def testDelPatients () {
 	// assert deletions >= 0
 
 	FixingTasksHub fs = new FixingTasksHub()
+  println "\ntestDelPatients..."
+  def simulation = true
 	Map jsonMap =
-			fs.deletePatients ('localhost', 'gcomesana', 'appform', true, listPats);
+			fs.deletePatients ('localhost', 'gcomesana', 'appform', simulation, listPats);
 
 	println "Patients with samples:"
 	// def patWithSamples = rpt.getSubjectsWithSamples() // this is a map subject -> map of samples
@@ -138,7 +140,7 @@ def testDelInterviews () {
 	m.put('157072025', ['Calidad de entrevista'])
   */
 
-
+  println "testDelInterviews"
 	def fuckMap = [
 		'157071001': ['Dieta'],
 		'157071004':['Dieta'],
@@ -169,7 +171,8 @@ def testDelInterviews () {
 */
 
 	FixingTasksHub fs = new FixingTasksHub()
-	Map jsonMap = fs.deleteInterviews('localhost', 'gcomesana', 'appform', true, fuckMap);
+  def sim = true
+	Map jsonMap = fs.deleteInterviews('localhost', 'gcomesana', 'appform', sim, fuckMap);
 /*
 	def totalRowsDeleted = task.performTask(sqlObj, {})
 	def patsWithSamples = task.getPatientsWithSamples()
@@ -194,7 +197,8 @@ def testChangePatsCode () {
 		"157072029":"157072074",
 		"157072019":"157072073",
 		"157072030":"157072084",
-		"157072020":"157072080"]
+		"157072020":"157072080"
+  ]
 
 	FixingTasksHub fs = new FixingTasksHub()
 	def jsonMap = fs.changeSubjecsCode('localhost', 'gcomesana',
@@ -215,7 +219,7 @@ testAnswers4Pats ()
 testPgaRows ()
 */
 
-// testDelPatients()
+testDelPatients()
 testDelInterviews ()
 // testChangePatsCode()
 
