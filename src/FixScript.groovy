@@ -89,7 +89,7 @@ def curateAnswers(dbUrl, dbUser, dbPass, simulation) {
 
 //  rmvdateTask.initSql(dbUrl, dbUser, dbPass)
     rmvdateTask.setQuery(qry);
-    rmvdateTask.performTask(theSqlConn)
+    rmvdateTask.performTask(theSqlConn, {})
   }
 } // EO fixAnswers
 
@@ -152,7 +152,7 @@ def getPatientCodesFromFile (filename) {
 dbUrl = "jdbc:postgresql://gredos:5432/appform"
 dbuser = 'gcomesana'
 dbpass = 'appform'
-dbhost = 'gredos'
+// dbhost = 'gredos'
 // simOpt = !opts.sim || opts.sim == '1'
 /*
 simOpt = true
@@ -238,18 +238,19 @@ if (opts.dbhost.compareTo('localhost') == 0) {
 */
 
 // dbUrl = "jdbc:postgresql://$opts.dbhost:$dbPort/appform"
-// dbUrl = "jdbc:postgresql://gredos:5432/appform"
-dbUrl = "jdbc:postgresql://localhost:4321/appform170613"
+dbUrl = "jdbc:postgresql://localhost:5432/appform"
+// dbUrl = "jdbc:postgresql://localhost:4321/appform170613"
 dbuser = 'gcomesana'
 dbpass = 'appform'
-simOpt = opts.sim == null || opts.sim == '1' // TODO here is a problem :-S
-simOpt = true
-println "** simulation: ${!opts.sim} || ${opts.sim == '1'} **"
+def simOpt = opts.sim == null || opts.sim == '1' // TODO here is a problem :-S
+simOpt = false
+// println "** simulation: ${!opts.sim} || ${opts.sim == '1'} **"
+println "** simulation: ${!simOpt} || $simOpt == '1'} **"
 
 what = ANSWER_ARG
 
 if (what == ANSWER_ARG)
-  curateAnswers (dbUrl, dbuser, dbpass, simOpt)
+  curateAnswers(dbUrl, dbuser, dbpass, simOpt)
 
 else {
   if (!opts.codes) {

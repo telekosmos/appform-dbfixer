@@ -15,7 +15,7 @@ import org.inb.util.QryRow
 
 // STARTS GROOVY SCRIPT /////////////////////////////////////////////////////
 String dbUrl = "jdbc:postgresql://localhost:5432/appform"
-dbUrl = "jdbc:postgresql://gredos.cnio.es:5432/appform"
+// dbUrl = "jdbc:postgresql://gredos.cnio.es:5432/appform"
 String dbUser = "gcomesana"
 String dbPass = "appform";
 
@@ -80,7 +80,7 @@ println ("Processing repeating answers...")
       else { // the new row does not belong to the multiple answers
 // first, check if there are more then one row in the multipleAns and delete
 // all of them except that with the higher idanswer
-        println ()
+        println()
         if (multipleAns.size() > 1) {
 
 // sort the list by idanser and remove (delete) all items but the last one
