@@ -156,4 +156,4 @@ println ("Processing repeating answers...")
   } // EO closure
   println "Total answers: Processed:${processedAnsCount}; Removed: "+deletedAnsCount
 
-} // EO if
+} // EO if theSql!=null
