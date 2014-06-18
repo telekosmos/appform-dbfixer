@@ -118,9 +118,6 @@ println "About to perform patients deletion " + (simulation? "(SIMULATION)": "(l
 
 
 
-
-
-
 /**
  * Read the file for remove patients, line per line, and adds the string into
  * the list of patients. PAY ATTENTION to the lines which have to be of the shape
@@ -148,6 +145,7 @@ def getPatientCodesFromFile (filename) {
 
 
 
+
 // START groovy script ////////////////////////////////////////////////
 dbUrl = "jdbc:postgresql://gredos:5432/appform"
 dbuser = 'gcomesana'
@@ -157,7 +155,7 @@ dbpass = 'appform'
 /*
 simOpt = true
 String filename = 'test/patients.txt'
-listPatientCodes = getPatientCodesFromFile(filename)
+listPatientCodes = getSubjectListFromFile(filename)
 deletePatients (dbhost, dbuser, dbpass, simOpt, listPatientCodes)
 */
 
@@ -240,10 +238,11 @@ if (opts.dbhost.compareTo('localhost') == 0) {
 // dbUrl = "jdbc:postgresql://$opts.dbhost:$dbPort/appform"
 dbUrl = "jdbc:postgresql://localhost:5432/appform"
 // dbUrl = "jdbc:postgresql://localhost:4321/appform170613"
+// dbUrl = "jdbc:postgresql://padme.cnio.es:5432/appform"
 dbuser = 'gcomesana'
 dbpass = 'appform'
 def simOpt = opts.sim == null || opts.sim == '1' // TODO here is a problem :-S
-simOpt = false
+simOpt = true
 // println "** simulation: ${!opts.sim} || ${opts.sim == '1'} **"
 println "** simulation: ${!simOpt} || $simOpt == '1'} **"
 

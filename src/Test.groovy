@@ -23,6 +23,7 @@ listPats = ['188011009', '157091049', '157091003', '157091023',
 
 def rpt = null
 def sqlObj = null
+final CHANGING_CODES_FILE = "/Users/telekosmos/DevOps/epiquest/appform-dbfixer/ter-subjects.txt"
 
 def setUp () {
   println "Setting up tests"
@@ -188,6 +189,7 @@ def testDelInterviews () {
 
 
 def testChangePatsCode () {
+  def simulation = false
 	def patcodesMap = [
 		"157072005":"157072017",
 		"157072008":"157072048",
@@ -200,14 +202,68 @@ def testChangePatsCode () {
 		"157072020":"157072080"
   ]
 
-	FixingTasksHub fs = new FixingTasksHub()
-	def jsonMap = fs.changeSubjecsCode('localhost', 'gcomesana',
-													'appform', true, patcodesMap)
+  patcodesMap = [
+    "TER011732": "TER511732",
+    "TER021546": "TER521546",
+    "TER021536": "TER521536",
+    "TER021543": "TER521543",
+    "TER021544": "TER521544",
+    "TER021566": "TER521566",
+    "TER021562": "TER521562",
+    "TER021564": "TER521564",
+    "TER021565": "TER521565",
+    "TER021570": "TER521570",
+    "TER021567": "TER521567",
+    "TER021527": "TER521527",
+    "TER021552": "TER521552",
+    "TER021553": "TER521553",
+    "TER021557": "TER521557",
+    "TER021558": "TER521558",
+    "TER021466": "TER521466"
+  ]
+
+  def dbUrl = 'jdbc:postgresql://localhost:5432/appform';
+	FixingTasksHub fs = new FixingTasksHub(dbUrl, 'gcomesana', 'appform')
+	def jsonMap = fs.changeSubjecsCode('localhost', simulation, patcodesMap)
 
 	jsonMap.each {
 		println "** ${it.key} => ${it.value}"
 	}
 }
+
+def testReadfileForChangingCodes(filename) {
+  def dbUrl = 'jdbc:postgresql://localhost:5432/appform';
+  FixingTasksHub fs = new FixingTasksHub(dbUrl, 'gcomesana', 'appform')
+  Map codes = fs.getSubjectCodesMapFromFile(filename)
+
+  assert codes != null
+  assert codes.size() > 0
+  codes.each {
+    def key = it.getKey()
+    def val = it.getValue()
+    assert ((String)key).indexOf("TER02") != -1
+    assert ((String)val).indexOf("TER52") != -1
+  }
+}
+
+
+
+def testParseFisForChangingCodes(filename) {
+  def dbUrl = 'jdbc:postgresql://localhost:5432/appform';
+  FixingTasksHub fs = new FixingTasksHub(dbUrl, 'gcomesana', 'appform')
+  InputStream is = (new File(filename)).newDataInputStream()
+  Map codes = fs.parseSubjectCodesFile(is)
+
+  assert codes != null
+  assert codes.size() > 0
+  codes.each {
+    def key = it.getKey()
+    def val = it.getValue()
+    assert ((String)key).indexOf("TER02") != -1
+    assert ((String)val).indexOf("TER52") != -1
+  }
+}
+
 
 
 setUp()
@@ -219,9 +275,14 @@ testAnswers4Pats ()
 testPgaRows ()
 */
 
-testDelPatients()
-testDelInterviews ()
+// testDelPatients()
+// testDelInterviews ()
 // testChangePatsCode()
+
+println("testReadfileForChangingCodes")
+testReadfileForChangingCodes(CHANGING_CODES_FILE)
+println("testParseFisForChangingCodes")
+testParseFisForChangingCodes(CHANGING_CODES_FILE)
 
 println "\nSe finé\n"
 setDown()

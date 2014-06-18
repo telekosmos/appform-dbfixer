@@ -4,8 +4,7 @@ import groovy.sql.Sql
 import org.inb.util.DBQuery
 
 /**
- * This task removes interview instances for the patients. It is
- * parametrized by patient code and interview(s) code(s) for those patients.
+ * The duty of this task is chage subjects code
  */
 class ChangeSubjectsCodeTask extends AbstractDBTask {
 	private DBQuery dbQuery
@@ -22,8 +21,10 @@ class ChangeSubjectsCodeTask extends AbstractDBTask {
 
 
   /**
-   * Constructor with named parameters patients as a HashMap codpatient->list_of_interviews_to_delet
-   * and sim, which is the simulation
+   * Constructor with named parameters patients as a HashMap
+   * codpatient->list_of_interviews_to_delete and sim, which is the simulation
+   * I.E: new ChangSubjectsCodeTask(patCodes: list, sim: true|false)
+   *
    * @params Map args a map to set the optional patients list parameters
    */
   public ChangeSubjectsCodeTask (Map args) {
@@ -45,14 +46,6 @@ class ChangeSubjectsCodeTask extends AbstractDBTask {
 
 
 	/**
-	 * Performs a controlled deletion of questionnaires (performances and answers).
-	 * Controlled is 'cause if form is QES and the patient has samples, the interview
-	 * wont be deleted. So, the flow to carry out controller deletion is:
-	 * - get the samples for the subject. if any sample returned, abort
-	 * - get the performances for subject and questionnaire
-	 * - get the answers and pgas for the user-performance
-	 * - when got this one, delete performance, entries in pat_gives_answers2ques table and answers
-	 * that's it
 	 *
 	 * @param Sql sql the sql object to run the queries
 	 * @param Closure constraint an optional closure which should act as a constraint
@@ -83,7 +76,7 @@ class ChangeSubjectsCodeTask extends AbstractDBTask {
 			def rsSamples = [:]
 			// constraint closure
 			def isConstraintSatisfied = { -> // constraint: interviewName == QES and no samples for patient
-				println "Checking for QES samples for $oldPatCode"
+				println "Checking for samples for $oldPatCode"
 				rsSamples = this.dbQuery.getSamples4Patient(oldPatCode)
 
 				return rsSamples.size() == 0
@@ -92,11 +85,12 @@ class ChangeSubjectsCodeTask extends AbstractDBTask {
 			if (isConstraintSatisfied()) {  // no samples
 			// results: ArrayList<GroovyRowResult>, each element a row
 				sql.withTransaction {
+          def oldPatRow = this.dbQuery.runSQL("select idpat, codpatient from patient where codpatient=$oldPatCode")
 					if (!this.simulation)
-						rowsAffected = this.dbQuery.updateSubjectCode(oldPatCode, newPatCode);
+            // if 'source' patient does not exists, don't update, just return -1
+						rowsAffected = oldPatRow.size() == 0? -1: this.dbQuery.updateSubjectCode(oldPatCode, newPatCode);
 
 					else {
-						def oldPatRow = this.dbQuery.runSQL("select idpat, codpatient from patient where codpatient=$oldPatCode")
 						def newPatRow = this.dbQuery.runSQL("select idpat, codpatient from patient where codpatient=$newPatCode")
 
 						// One subject code is changed only if, in addition to satisfy constraints,

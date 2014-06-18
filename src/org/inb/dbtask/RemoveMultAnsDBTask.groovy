@@ -71,7 +71,7 @@ public class RemoveMultAnsDBTask extends AbstractDBTask {
             if (answers.keySet().contains("9999") && answers.size() == 2) {
               def nines = answers.findAll { it.key.equalsIgnoreCase("9999")}
               def others = answers.findAll { it.key.equalsIgnoreCase("9999") == false }
-              assert nines instanceof Map<String, List>;
+              assert nines instanceof Map<String, List>
               def listNines = nines.values ()
               def listOthers = others.values()
 
@@ -81,7 +81,7 @@ public class RemoveMultAnsDBTask extends AbstractDBTask {
                 }
               }
               listOthers.each {
-                it.remove(it.size()-1);
+                it.remove(it.size()-1)
                 it.each {
                   item -> theSql.withTransaction { txClosure (item) }
                 }

@@ -183,6 +183,7 @@ class RemoveQuestionnairePatientsTask extends AbstractDBTask {
    }
    }
    */
+
   public Integer performTask(Sql sql, Closure constraint) {
 
     if (this.simulation)

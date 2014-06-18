@@ -193,7 +193,7 @@ class FixingTasksHub {
    * @param simulation if simulation or live update
 	 * @param mapCodes, a map such that oldCode -> newCode
 	 */
-	def changeSubjecsCode (dbHost, dbUser, dbPass, simulation, mapCodes) {
+	def changeSubjecsCode (dbHost, simulation, mapCodes) {
 		def localPort = '4321'
 		localPort = '5432'
 		localPort = dbHost == 'localhost' ? '4321' : '5432'
@@ -214,6 +214,69 @@ class FixingTasksHub {
 		jsonOut
 	}
 
+  /**
+   * Read a map of subjects code and subjects NEW codes (to change) from file
+   * The format of each line of the file must be:
+   * <old_subject_code>:<new_subject_code>
+   * @param filename the name of the file
+   * @return a Map structure with entries for old and new subjects
+   */
+  Map getSubjectCodesMapFromFile (filename) {
+    def fileCodes = new File(filename)
+    def listPatientCodes = [:]
+
+    fileCodes.eachLine {
+      def codes = it.split(":")
+      if (codes.length == 0)
+        codes = it.split("=")
+
+      if (codes.length > 1) // check blank lines
+        listPatientCodes.put(codes[0], codes[1])
+    }
+    listPatientCodes
+  }
+
+
+  /**
+   * Parse the subject codes file. It is intended to get a java.io.InputStream
+   * as processed by a upload file servlet
+   * @param fis a java.io.InputStream
+   * @return a Map with the old_code:new_code; null if the file (input stream) is malformed
+   */
+  Map parseSubjectCodesFile(fis) {
+    if (!fis)
+      return null;
+
+    def listPatientCodes = [:]
+    fis.eachLine {
+      def codes = it.split(":")
+      if (codes.length == 0)
+        codes = it.split("=")
+
+      if (codes.length > 1) // check blank lines
+        listPatientCodes.put(codes[0], codes[1])
+    }
+    listPatientCodes
+  }
+
+
+  /**
+   * Gets a list of subjects from a input stream. It is intended to be used from a
+   * upload file servlet. The file must contain a subject per line
+   * @param fis a java.io.InputStream with a subject code per line
+   * @return a List of the retrieved subject codes or null if the content is malformed
+   */
+  List getSubjectsList (fis) {
+    def listPatientCodes = []
+    if (!fis)
+      return null;
+
+    ((InputStream)fis).eachLine {
+      listPatientCodes << it
+    }
+    return listPatientCodes
+  }
+
 
 
 	/**
@@ -222,13 +285,13 @@ class FixingTasksHub {
 	 * PAY ATTENTION to the lines which have to be of the shape
 	 * <patient_code>,<questionnaire name|questionnaire id>,<study-name|study-code>
 	 */
-	def getPatientCodesFromFile(filename) {
+	def getSubjectListFromFile(filename) {
 
-		fileCodes = new File(filename)
-		listPatientCodes = []
-		charstoRead = 1024
-		offset = 0
-		currentCode = ''
+		def fileCodes = new File(filename)
+		def listPatientCodes = []
+		def charstoRead = 1024
+		def offset = 0
+		def currentCode = ''
 
 		fileCodes.withReader { reader ->
 			while ((currentCode = reader.readLine()) != null)

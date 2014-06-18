@@ -11,8 +11,8 @@ import groovy.sql.Sql
 import org.inb.dbtask.RemoveMultAnsByDateDBTask
 
 // STARTS GROOVY SCRIPT /////////////////////////////////////////////////////
-String dbUrl = "jdbc:postgresql://localhost:4321/appform"
-dbUrl = "jdbc:postgresql://padme:5432/appform"
+String dbUrl = "jdbc:postgresql://localhost:5432/appform"
+// dbUrl = "jdbc:postgresql://padme:5432/appform"
 // dbUrl = "jdbc:postgresql://ubio.bioinfo.cnio.es:5432/appform"
 // dbUrl = "jdbc:postgresql://gredos:5432/appform"
 String dbUser = "gcomesana"
@@ -66,6 +66,6 @@ if (theSqlConn != null) {
 
 //  rmvdateTask.initSql(dbUrl, dbUser, dbPass)
   rmvdateTask.setQuery (qry);
-  rmvdateTask.performTask (theSqlConn)
+  rmvdateTask.performTask (theSqlConn, {})
 
 }
