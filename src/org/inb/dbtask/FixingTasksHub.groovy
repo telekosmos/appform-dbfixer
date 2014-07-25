@@ -205,11 +205,13 @@ class FixingTasksHub {
 		def totalRowsDeleted = task.performTask(theSqlConn, {})
 		def patsWithSamples = task.getPatientsWithSamples()
 		def patientsUnchanged = task.getPatientsUnchanged()
+    def patientsNonExistent = task.getPatientsNonexistent()
 
 		def jsonOut = [
 			rows_affected: totalRowsDeleted,
 			pats_with_samples: patsWithSamples,
-			patients_unchanged: patientsUnchanged
+			patients_unchanged: patientsUnchanged,
+      patients_nonexistent: patientsNonExistent
 		]
 		jsonOut
 	}

@@ -16,6 +16,7 @@ class ChangeSubjectsCodeTask extends AbstractDBTask {
 	// codPatient -> [codeSample -> numquestions]
   def patientsWithSamples
 	def patientsUnchanged
+  def patientsNonexistent
 
   def simulation = true // to use select (simulation = true) or delete
 
@@ -33,6 +34,7 @@ class ChangeSubjectsCodeTask extends AbstractDBTask {
 
     this.patientsWithSamples = [:] // patients with samples for QES interview
 	  this.patientsUnchanged = [:]
+    this.patientsNonexistent = [:]
 
 	  this.dbQuery = new DBQuery()
 /*
@@ -99,22 +101,28 @@ class ChangeSubjectsCodeTask extends AbstractDBTask {
 						if (oldPatRow.size() == 1 && newPatRow.size() == 0)
 							rowsAffected = 1
 
-						else if ((oldPatRow.size() == 1 && newPatRow.size() == 1) ||
-							       (oldPatRow.size() == 0 && newPatRow.size() == 0) ||
+						else if (oldPatRow.size() == 1 && newPatRow.size() == 1)
+              rowsAffected = 0
+
+            else if ((oldPatRow.size() == 0 && newPatRow.size() == 0) ||
 										 (oldPatRow.size() == 0 && newPatRow.size() == 1))
 							rowsAffected = -1
 					}
 				}
 
 				if (rowsAffected == -1)
-					this.patientsUnchanged[oldPatCode] = newPatCode
-				else
+					this.patientsNonexistent[oldPatCode] = newPatCode
+
+        else if (rowsAffected == 0)
+          this.patientsUnchanged[oldPatCode] = newPatCode
+
+				else // rowsAffectd is 1
 					totalRowsAffected++
 
 			}
 			else {
 				this.patientsWithSamples[oldPatCode] = rsSamples.values()
-				println "$oldPatCode has samples for $intrv"
+				println "$oldPatCode has samples: ${this.patientsWithSamples[oldPatCode]}"
 			} // EO if
 
 		} // EO subjectsMap.each...
