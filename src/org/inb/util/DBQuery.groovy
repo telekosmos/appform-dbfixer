@@ -31,7 +31,7 @@ public class DBQuery {
 		from interview i, patient p, performance pf
 		where i.name = ? -- interview name
 		  and pf.codinterview = i.idinterview
-		  and p.codpatient = '?' -- patient code
+		  and p.codpatient = ? -- patient code
 		  and pf.codpat = p.idpat;
 	"""
 
@@ -39,7 +39,7 @@ public class DBQuery {
 	// params for selAnswersQry are codpatient, codproject and questionnaire name
   def selAnswersQryQuestionnaire = """select a.idanswer, pga.idp_a_q, a.thevalue, p.idpat, p.codpatient
       from patient p, pat_gives_answer2ques pga, answer a, question q, item it
-      where p.codpatient = '?'
+      where p.codpatient = ?
         -- and p.idpat = xxx
         and p.idpat = pga.codpat
         and pga.codanswer = a.idanswer
@@ -49,8 +49,8 @@ public class DBQuery {
             (select idquestion
              from question q, item i, section s, interview iv, project p
              where 1 = 1 -- s.codinterview = it.idinterview
-               and upper(iv.name) = upper('?')
-               and p.project_code = '?'
+               and upper(iv.name) = upper(?)
+               and p.project_code = ?
                and iv.codprj = p.idprj
                and s.codinterview = iv.idinterview
                and i.idsection = s.idsection
@@ -60,7 +60,7 @@ public class DBQuery {
 
 	def selAnswersQry = """select a.idanswer, a.thevalue, p.idpat, p.codpatient
     from patient p, pat_gives_answer2ques pga, answer a, question q, item it
-    where p.codpatient = '?'
+    where p.codpatient = ?
       and p.idpat = pga.codpat
       and pga.codanswer = a.idanswer
       and pga.codquestion = q.idquestion
@@ -69,7 +69,7 @@ public class DBQuery {
           (select idquestion
            from question q, item i, section s, interview iv, project p
            where 1 = 1 -- s.codinterview = it.idinterview
-             and p.project_code = '?'
+             and p.project_code = ?
              and iv.codprj = p.idprj
              and s.codinterview = iv.idinterview
              and i.idsection = s.idsection
@@ -107,7 +107,7 @@ public class DBQuery {
 	def selQuestionnaires = """
 	select idinterview, name
 	from interview i
-	where i.name = '?';
+	where i.name = ?;
 	"""
 
 
