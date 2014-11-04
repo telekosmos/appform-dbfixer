@@ -376,6 +376,9 @@ public class DBQuery {
 
 
 	def deletePgas (pgaIdList) {
+    if (pgaIdList.size() == 0)
+      return 0
+
 		if (theSqlConn == null)
 			this.getDbConn()
 
@@ -395,6 +398,9 @@ public class DBQuery {
 
 
 	def deleteIntrvAnswers (idAnswersList) {
+    if (idAnswersList.size() == 0)
+      return 0
+
 		if (theSqlConn == null)
 			this.getDbConn()
 
