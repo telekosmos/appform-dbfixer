@@ -93,12 +93,14 @@ class RemoveInterviewsTask extends AbstractDBTask {
 				def rsSamples = [:]
 				def isConstraintSatisfied = { -> // constraint: interviewName == QES and no samples for patient
 					// def intrvName = this.dbQuery.getQuestionnaireNameFromId(intrv)
+          /*
 					if (intrv.indexOf('QES') != -1) {
 						println "Checking for QES samples for $codPat"
 						rsSamples = dbQuery.getSamples4Patient(codPat)
 						return rsSamples.size() == 0
 					}
 					else
+					*/
 						return true;
 				}
 				/*
