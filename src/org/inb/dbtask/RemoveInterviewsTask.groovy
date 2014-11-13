@@ -22,6 +22,7 @@ class RemoveInterviewsTask extends AbstractDBTask {
   def patientsWithSamples
 //	def patientsDeleted
 	def interviewsDeleted
+  def lastInterviews
 
   def simulation = true // to use select (simulation = true) or delete
 
@@ -39,6 +40,7 @@ class RemoveInterviewsTask extends AbstractDBTask {
 //	  this.patientsDeleted = 0
 //	  this.interviewsDeleted = 0
 	  this.interviewsDeleted = []
+    this.lastInterviews = []
 
 	  this.dbQuery = new DBQuery()
 /*
@@ -86,27 +88,32 @@ class RemoveInterviewsTask extends AbstractDBTask {
 			def intrvList = it.value
 
 			println ""
-			intrvList.each { intrv ->
-				this.dbQuery.setDbConn(sql)
-				// constraint: if QES is to delete but patient has samples, report
+      this.dbQuery.setDbConn(sql)
+      // constraint: if QES is to delete but patient has samples, report
+      // constraint: interviewName == QES and no samples for patient
+      // 12.11.14: interviews not last interviews (numOfIntervs4Pat - intrvList > 0)
+      def isConstraintSatisfied = { ->
+        // def intrvName = this.dbQuery.getQuestionnaireNameFromId(intrv)
+        /*
+        if (intrv.indexOf('QES') != -1) {
+          println "Checking for QES samples for $codPat"
+          rsSamples = dbQuery.getSamples4Patient(codPat)
+          return rsSamples.size() == 0
+        }
+        else
+        */
+        def numInterviews4Pat = this.dbQuery.getNumIntrvs4Pat(codPat)
+        return (numInterviews4Pat-intrvList.size()) > 0
+      } // EO isConstraintSatisfied closure
 
-				def rsSamples = [:]
-				def isConstraintSatisfied = { -> // constraint: interviewName == QES and no samples for patient
-					// def intrvName = this.dbQuery.getQuestionnaireNameFromId(intrv)
-					if (intrv.indexOf('QES') != -1) {
-						println "Checking for QES samples for $codPat"
-						rsSamples = dbQuery.getSamples4Patient(codPat)
-						return rsSamples.size() == 0
-					}
-					else
-						return true;
-				}
+      def rsSamples = dbQuery.getSamples4Patient(codPat)
+      this.patientsWithSamples[codPat] = rsSamples.values()
+			intrvList.each { intrv ->
+				// this.dbQuery.setDbConn(sql)
+				// def rsSamples = [:]
+
 				/*
 				def forms = dbQuery.getQuestionnaires(intrv.replaceAll("ñ", "ñ"))
-				println "Got interviews for ($intrv):"
-				forms.each {
-					println "** interview ${it['name']} (${it['idinterview']})"
-				}
 				*/
 				if (isConstraintSatisfied()) {
 					// results: ArrayList<GroovyRowResult>, each element a row
@@ -136,13 +143,19 @@ class RemoveInterviewsTask extends AbstractDBTask {
 								// println "** ================= **"
 							}
 						this.interviewsDeleted << [codPat,intrv]
+            this.lastInterviews << [codPat, false]
+
 					}
+          else {
+            // something here or in the admin when performances are 0
+          }
 
 					println "$codPat ($intrv) -> performances: ${performances.size()} is $aPerf && answers: ${answers.size()}"
 					println "** ================= **"
 				}
 				else {
-					this.patientsWithSamples[codPat] = rsSamples.values()
+					// this.patientsWithSamples[codPat] = rsSamples.values()
+          this.lastInterviews << [codPat, true];
 					println "$codPat has samples for $intrv"
 				}
 			} // EO each intrvList

@@ -31,7 +31,7 @@ public class DBQuery {
 		from interview i, patient p, performance pf
 		where i.name = ? -- interview name
 		  and pf.codinterview = i.idinterview
-		  and p.codpatient = '?' -- patient code
+		  and p.codpatient = ? -- patient code
 		  and pf.codpat = p.idpat;
 	"""
 
@@ -39,7 +39,7 @@ public class DBQuery {
 	// params for selAnswersQry are codpatient, codproject and questionnaire name
   def selAnswersQryQuestionnaire = """select a.idanswer, pga.idp_a_q, a.thevalue, p.idpat, p.codpatient
       from patient p, pat_gives_answer2ques pga, answer a, question q, item it
-      where p.codpatient = '?'
+      where p.codpatient = ?
         -- and p.idpat = xxx
         and p.idpat = pga.codpat
         and pga.codanswer = a.idanswer
@@ -49,8 +49,8 @@ public class DBQuery {
             (select idquestion
              from question q, item i, section s, interview iv, project p
              where 1 = 1 -- s.codinterview = it.idinterview
-               and upper(iv.name) = upper('?')
-               and p.project_code = '?'
+               and upper(iv.name) = upper(?)
+               and p.project_code = ?
                and iv.codprj = p.idprj
                and s.codinterview = iv.idinterview
                and i.idsection = s.idsection
@@ -60,7 +60,7 @@ public class DBQuery {
 
 	def selAnswersQry = """select a.idanswer, a.thevalue, p.idpat, p.codpatient
     from patient p, pat_gives_answer2ques pga, answer a, question q, item it
-    where p.codpatient = '?'
+    where p.codpatient = ?
       and p.idpat = pga.codpat
       and pga.codanswer = a.idanswer
       and pga.codquestion = q.idquestion
@@ -69,11 +69,18 @@ public class DBQuery {
           (select idquestion
            from question q, item i, section s, interview iv, project p
            where 1 = 1 -- s.codinterview = it.idinterview
-             and p.project_code = '?'
+             and p.project_code = ?
              and iv.codprj = p.idprj
              and s.codinterview = iv.idinterview
              and i.idsection = s.idsection
              and q.idquestion = i.iditem );
+  """
+
+  def selNumIntrvs4Pat = """select count(i.idinterview) as counter
+    from patient p, interview i, performance pf
+    where p.codpatient = ?
+      and i.idinterview = pf.codinterview
+      and pf.codpat = p.idpat;
   """
 
 
@@ -107,7 +114,7 @@ public class DBQuery {
 	def selQuestionnaires = """
 	select idinterview, name
 	from interview i
-	where i.name = '?';
+	where i.name = ?;
 	"""
 
 
@@ -249,7 +256,7 @@ public class DBQuery {
 		if (rows.size() > 0)
 			println "Perf info: idinterview: ${rows[0]['idinterview']}; idperf: ${rows[0]['idperformance']}; idpat: ${rows[0]['idpat']}\n"
 		else
-			println "No performances for $codPatient and $questionnaireName\n"
+			println "No interviews (performances) left for $codPatient and $questionnaireName\n"
 
 		rows
 	}
@@ -331,6 +338,28 @@ public class DBQuery {
 		rowsAffected
 	}
 
+  /**
+   * Gets the number of interviews for a patient
+   * @param subjectCode the subject code
+   * @return the number of interviews (performances) found for a subject
+   */
+  def getNumIntrvs4Pat (subjectCode) {
+    if (theSqlConn == null)
+      this.getDbConn()
+
+
+    def myQry = this.selNumIntrvs4Pat.replaceFirst("\\?", "'$subjectCode'")
+
+    // def rows = theSqlConn.rows(this.selPatientPerf, params)
+    def rows = theSqlConn.rows(myQry)
+
+    if (rows.size() > 0)
+      println "Num of interviews for $subjectCode: ${rows[0]['counter']}\n"
+    else
+      println "No performances are left for $subjectCode\n"
+
+    rows[0]['counter']
+  }
 
 
 	/**
@@ -376,6 +405,9 @@ public class DBQuery {
 
 
 	def deletePgas (pgaIdList) {
+    if (pgaIdList.size() == 0)
+      return 0
+
 		if (theSqlConn == null)
 			this.getDbConn()
 
@@ -395,6 +427,9 @@ public class DBQuery {
 
 
 	def deleteIntrvAnswers (idAnswersList) {
+    if (idAnswersList.size() == 0)
+      return 0
+
 		if (theSqlConn == null)
 			this.getDbConn()
 
