@@ -41,7 +41,7 @@ class FixingTasksHub {
 	 */
 	def curateAnswers(dbUrl, dbUser, dbPass, simulation) {
 
-		println "Fixing repetad answers for ${dbUrl} for ${dbUser}:${dbPass}..."
+		// println "Fixing repetad answers for ${dbUrl} for ${dbUser}:${dbPass}..."
 		// Sql theSqlConn = Sql.newInstance(dbUrl, dbUser, dbPass, 'org.postgresql.Driver')
 		Sql theSqlConn = Sql.newInstance(this.dbUrl, this.dbUser, this.dbPasswd, 'org.postgresql.Driver')
 
@@ -114,8 +114,7 @@ class FixingTasksHub {
     def passwd = dbPass == null? this.dbPasswd: dbPass
     def url = this.dbUrl == null? "jdbc:postgresql://$host:$localPort/appform": this.dbUrl
 
-    // println ("FixTasks deleteInterviews -> dbUrl: $localUrl; user: $localUser :: $localPass")
-    println("FixTasks deleteInterviews -> dbUrl: ${url}; ${user}:${passwd}")
+    // println("FixTasks deleteInterviews -> dbUrl: ${url}; ${user}:${passwd}")
     Sql theSqlConn = Sql.newInstance(url, user, passwd, 'org.postgresql.Driver')
 
 		println "About to perform patients deletion " + (simulation ? "(SIMULATION)" : "(live database update!!!)")
@@ -161,20 +160,22 @@ class FixingTasksHub {
     def passwd = dbPass == null? this.dbPasswd: dbPass
     def url = this.dbUrl == null? "jdbc:postgresql://$host:$localPort/appform": this.dbUrl
 
-		// println ("FixTasks deleteInterviews -> dbUrl: $localUrl; user: $localUser :: $localPass")
-		println("FixTasks deleteInterviews -> dbUrl: ${url}; ${user}:${passwd}")
+		// println("FixTasks deleteInterviews -> dbUrl: ${url}; ${user}:${passwd}")
 		Sql theSqlConn = Sql.newInstance(url, user, passwd, 'org.postgresql.Driver')
 
 		def task = new RemoveInterviewsTask(interviews: mapInterviews, sim: simulation)
 		def totalRowsDeleted = task.performTask(theSqlConn, {})
 		def patsWithSamples = task.getPatientsWithSamples()
 		def interviewsDel = task.getInterviewsDeleted()
+    def lastInterviews = task.getLastInterviews() as Set
 
 		def jsonOut = [
 			rows_affected: totalRowsDeleted, // rows_affected -> 2008
 			pats_with_samples: patsWithSamples, // pats_with_samples -> 157001002:[samples]
-			interviews_deleted: interviewsDel // interviews_deleted -> [[157..., QES...],...]
+			interviews_deleted: interviewsDel, // interviews_deleted -> [[157..., QES...],...]
+      last_interviews: lastInterviews // non-repeating list of pairs pat -> true/false
 		]
+    // println("jsonOut: $jsonOut")
 		jsonOut
 	}
 

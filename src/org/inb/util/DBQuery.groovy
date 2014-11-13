@@ -76,6 +76,13 @@ public class DBQuery {
              and q.idquestion = i.iditem );
   """
 
+  def selNumIntrvs4Pat = """select count(i.idinterview) as counter
+    from patient p, interview i, performance pf
+    where p.codpatient = ?
+      and i.idinterview = pf.codinterview
+      and pf.codpat = p.idpat;
+  """
+
 
 	def updPatCode = """update patient
 		set codpatient = '?', -- '157072017',
@@ -249,7 +256,7 @@ public class DBQuery {
 		if (rows.size() > 0)
 			println "Perf info: idinterview: ${rows[0]['idinterview']}; idperf: ${rows[0]['idperformance']}; idpat: ${rows[0]['idpat']}\n"
 		else
-			println "No performances for $codPatient and $questionnaireName\n"
+			println "No interviews (performances) left for $codPatient and $questionnaireName\n"
 
 		rows
 	}
@@ -331,6 +338,28 @@ public class DBQuery {
 		rowsAffected
 	}
 
+  /**
+   * Gets the number of interviews for a patient
+   * @param subjectCode the subject code
+   * @return the number of interviews (performances) found for a subject
+   */
+  def getNumIntrvs4Pat (subjectCode) {
+    if (theSqlConn == null)
+      this.getDbConn()
+
+
+    def myQry = this.selNumIntrvs4Pat.replaceFirst("\\?", "'$subjectCode'")
+
+    // def rows = theSqlConn.rows(this.selPatientPerf, params)
+    def rows = theSqlConn.rows(myQry)
+
+    if (rows.size() > 0)
+      println "Num of interviews for $subjectCode: ${rows[0]['counter']}\n"
+    else
+      println "No performances are left for $subjectCode\n"
+
+    rows[0]['counter']
+  }
 
 
 	/**
