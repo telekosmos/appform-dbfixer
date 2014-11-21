@@ -18,10 +18,13 @@ public class DBQuery {
   private String dbPasswd
   private Sql theSqlConn
 
+  public static String DUMMY_PAT = "15769696969"
+
   def selPatSamples = """
     select p.idpat, p.codpatient
     from patient p
     where p.codpatient like '?__'
+    	and p.codpatient <> ${DBQuery.DUMMY_PAT}
     order by 2;
   """
 
@@ -32,6 +35,7 @@ public class DBQuery {
 		where i.name = ? -- interview name
 		  and pf.codinterview = i.idinterview
 		  and p.codpatient = ? -- patient code
+		  and p.codpatient <> ${DBQuery.DUMMY_PAT}
 		  and pf.codpat = p.idpat;
 	"""
 
@@ -41,6 +45,7 @@ public class DBQuery {
       from patient p, pat_gives_answer2ques pga, answer a, question q, item it
       where p.codpatient = ?
         -- and p.idpat = xxx
+        and p.codpatient <> ${DBQuery.DUMMY_PAT}
         and p.idpat = pga.codpat
         and pga.codanswer = a.idanswer
         and pga.codquestion = q.idquestion
@@ -61,6 +66,7 @@ public class DBQuery {
 	def selAnswersQry = """select a.idanswer, a.thevalue, p.idpat, p.codpatient
     from patient p, pat_gives_answer2ques pga, answer a, question q, item it
     where p.codpatient = ?
+    	and p.codpatient = ${DBQuery.DUMMY_PAT}
       and p.idpat = pga.codpat
       and pga.codanswer = a.idanswer
       and pga.codquestion = q.idquestion
@@ -79,6 +85,7 @@ public class DBQuery {
   def selNumIntrvs4Pat = """select count(i.idinterview) as counter
     from patient p, interview i, performance pf
     where p.codpatient = ?
+    	and p.codpatient = ${DBQuery.DUMMY_PAT}
       and i.idinterview = pf.codinterview
       and pf.codpat = p.idpat;
   """
@@ -90,7 +97,8 @@ public class DBQuery {
 		   codhosp = '?', -- '07',
 		   cod_type_subject = '?', -- '2',
 		   codpat = '?' -- '017'
-		where codpatient = '?' -- '157072005';
+		where codpatient = '?' -- '157072005'
+		  and codpatient <> ${DBQuery.DUMMY_PAT};
 	"""
 
 	def deletePerf = """delete
