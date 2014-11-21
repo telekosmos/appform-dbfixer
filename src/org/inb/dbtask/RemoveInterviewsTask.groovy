@@ -86,8 +86,9 @@ class RemoveInterviewsTask extends AbstractDBTask {
 			def codPat = it.key
 			def codPrj = codPat[0..2]
 			def intrvList = it.value
-
-			println ""
+			if (codPat.compareTo(DBQuery.DUMMY_PAT) == 0)
+        return;
+			
       this.dbQuery.setDbConn(sql)
       // constraint: if QES is to delete but patient has samples, report
       // constraint: interviewName == QES and no samples for patient
