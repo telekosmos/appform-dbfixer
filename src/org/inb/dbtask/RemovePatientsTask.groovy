@@ -20,7 +20,7 @@ class RemovePatientsTask extends AbstractDBTask {
       where p.codpatient = ?
         -- and p.idpat = ?
         and p.idpat = pga.codpat
-        and p.codpat <> ${DBQuery.DUMMY_PAT}
+        and p.codpat <> '${DBQuery.DUMMY_PAT}'
         and pga.codanswer = a.idanswer
         and pga.codquestion = q.idquestion
         and q.idquestion = it.iditem
@@ -41,7 +41,7 @@ class RemovePatientsTask extends AbstractDBTask {
   def patsIdQry = """select p.idpat as idpat, p.codpatient as codpatient
     from patient p
     where p.codpatient in (?)
-    and p.codpatient <> ${DBQuery.DUMMY_PAT}
+    and p.codpatient <> '${DBQuery.DUMMY_PAT}';
   """
 
 
@@ -61,7 +61,7 @@ class RemovePatientsTask extends AbstractDBTask {
     delete from patient
     where codpatient = ?
     and idpat = ?
-    and codpatient <> ${DBQuery.DUMMY_PAT};
+    and codpatient <> '${DBQuery.DUMMY_PAT}';
   """
 
 
@@ -70,7 +70,7 @@ class RemovePatientsTask extends AbstractDBTask {
     from patient
     where codpatient = ?
     and idpat = ?
-    and codpatient <> ${DBQuery.DUMMY_PAT};
+    and codpatient <> '${DBQuery.DUMMY_PAT}';
   """
 
 
