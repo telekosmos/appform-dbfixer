@@ -76,53 +76,77 @@ class ChangeSubjectsCodeTask extends AbstractDBTask {
 			this.dbQuery.setDbConn(sql)
 
 			def rsSamples = [:]
+      def oldPatRow
 			// constraint closure
-			def isConstraintSatisfied = { -> // constraint: interviewName == QES and no samples for patient
+			def isConstraintSatisfied = { -> // constraint: interviewName == QES and no samples for patient, prev 181114
 				println "Checking for samples for $oldPatCode"
 				rsSamples = this.dbQuery.getSamples4Patient(oldPatCode)
+        oldPatRow = this.dbQuery.runSQL("select idpat, codpatient from patient where codpatient=$oldPatCode")
 
-				return rsSamples.size() == 0
+				return rsSamples.size() == 0 && oldPatRow.size() > 0
 			}
 
 			if (isConstraintSatisfied()) {  // no samples
 			// results: ArrayList<GroovyRowResult>, each element a row
 				sql.withTransaction {
-          def oldPatRow = this.dbQuery.runSQL("select idpat, codpatient from patient where codpatient=$oldPatCode")
-					if (!this.simulation)
-            // if 'source' patient does not exists, don't update, just return -1
-						rowsAffected = oldPatRow.size() == 0? -1: this.dbQuery.updateSubjectCode(oldPatCode, newPatCode);
+          def newRow = this.dbQuery.runSQL("select idpat, codpatient from patient where codpatient=$newPatCode")
 
+          if (!this.simulation) {
+            // if 'source' patient does not exists, don't update, just return -1
+            if (oldPatRow.size() > 0) {
+              if (oldPatRow.size() == 1 && newRow.size() == 1) {
+                // aux = oldPatRow; oldPatRow = newRow; newRow = aux
+                this.dbQuery.updateSubjectCode(oldPatCode, 'XXXXXXXXX');
+                rowsAffected = this.dbQuery.updateSubjectCode(newPatCode, oldPatCode);
+                rowsAffected += this.dbQuery.updateSubjectCode('XXXXXXXXX', newPatCode);
+              }
+              else // only oldPatCode exists, so change is normal
+                rowsAffected = this.dbQuery.updateSubjectCode(oldPatCode, newPatCode);
+            }
+            else { // oldPat does not exist
+						  rowsAffected = 0;
+              this.patientsNonexistent[oldPatCode] = newPatCode
+            }
+          }
 					else {
 						def newPatRow = this.dbQuery.runSQL("select idpat, codpatient from patient where codpatient=$newPatCode")
 
 						// One subject code is changed only if, in addition to satisfy constraints,
 						// the old code exists in DB and the new one not.
 						// Rest of combinations are discarded
-						if (oldPatRow.size() == 1 && newPatRow.size() == 0)
-							rowsAffected = 1
+						if (oldPatRow.size() == 1 && newPatRow.size() == 0)  {
+              rowsAffected = 1
+              // println "Changed $oldPatCode to $newPatCode"
+            }
 
-						else if (oldPatRow.size() == 1 && newPatRow.size() == 1)
-              rowsAffected = 0
+						else if (oldPatRow.size() == 1 && newPatRow.size() == 1) {
+              // rowsAffected = 0
+              println "Swapping $oldPatCode <-> $newPatCode"
+              rowsAffected = 2
+            }
 
             else if ((oldPatRow.size() == 0 && newPatRow.size() == 0) ||
 										 (oldPatRow.size() == 0 && newPatRow.size() == 1))
-							rowsAffected = -1
+							rowsAffected = 0
 					}
-				}
+				} // EO sql.Transaction
 
 				if (rowsAffected == -1)
 					this.patientsNonexistent[oldPatCode] = newPatCode
 
-        else if (rowsAffected == 0)
+        else if (rowsAffected == 0) // when swapping, before 18.11.14, now when source does not exist
           this.patientsUnchanged[oldPatCode] = newPatCode
 
-				else // rowsAffectd is 1
-					totalRowsAffected++
-
-			}
+				else // rowsAffectd is 1 or 2 (if it's code swapping)
+					totalRowsAffected += rowsAffected
+			} // EO isConstraint satisfied
 			else {
-				this.patientsWithSamples[oldPatCode] = rsSamples.values()
-				println "$oldPatCode has samples: ${this.patientsWithSamples[oldPatCode]}"
+        if (oldPatRow.size() > 0) {
+				  this.patientsWithSamples[oldPatCode] = rsSamples.values()
+				  println "$oldPatCode has samples: ${this.patientsWithSamples[oldPatCode]}"
+        }
+        else
+          this.patientsNonexistent[oldPatCode] = newPatCode
 			} // EO if
 
 		} // EO subjectsMap.each...
