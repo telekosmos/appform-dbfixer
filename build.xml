@@ -1,0 +1,336 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="appform-dbfixer" default="all">
+  
+  
+  <property file="build.properties"/>
+  <!-- Uncomment the following property if no tests compilation is needed -->
+  <!-- 
+  <property name="skip.tests" value="true"/>
+   -->
+  
+  <!-- Compiler options -->
+  
+  <property name="compiler.debug" value="on"/>
+  <property name="compiler.generate.no.warnings" value="off"/>
+  <property name="compiler.args" value=""/>
+  <property name="compiler.max.memory" value="128m"/>
+  <patternset id="ignored.files">
+    <exclude name="**/CVS/**"/>
+    <exclude name="**/SCCS/**"/>
+    <exclude name="**/RCS/**"/>
+    <exclude name="**/rcs/**"/>
+    <exclude name="**/.DS_Store/**"/>
+    <exclude name="**/.svn/**"/>
+    <exclude name="**/.pyc/**"/>
+    <exclude name="**/.pyo/**"/>
+    <exclude name="**/*.pyc/**"/>
+    <exclude name="**/*.pyo/**"/>
+    <exclude name="**/.git/**"/>
+    <exclude name="**/*.hprof/**"/>
+    <exclude name="**/_svn/**"/>
+    <exclude name="**/.hg/**"/>
+    <exclude name="**/*.lib/**"/>
+    <exclude name="**/*~/**"/>
+    <exclude name="**/__pycache__/**"/>
+    <exclude name="**/.bundle/**"/>
+    <exclude name="**/*.rbc/**"/>
+    <exclude name="**/vssver.scc/**"/>
+    <exclude name="**/vssver2.scc/**"/>
+  </patternset>
+  <patternset id="library.patterns">
+    <include name="*.war"/>
+    <include name="*.ear"/>
+    <include name="*.apk"/>
+    <include name="*.zip"/>
+    <include name="*.swc"/>
+    <include name="*.ane"/>
+    <include name="*.egg"/>
+    <include name="*.jar"/>
+  </patternset>
+  <patternset id="compiler.resources">
+    <exclude name="**/?*.java"/>
+    <exclude name="**/?*.form"/>
+    <exclude name="**/?*.class"/>
+    <exclude name="**/?*.groovy"/>
+    <exclude name="**/?*.scala"/>
+    <exclude name="**/?*.flex"/>
+    <exclude name="**/?*.kt"/>
+    <exclude name="**/?*.clj"/>
+  </patternset>
+  
+  <!-- JDK definitions -->
+  
+  <property name="jdk.bin.1.6" value="${jdk.home.1.6}/bin"/>
+  <path id="jdk.classpath.1.6">
+    <fileset dir="${jdk.home.1.6}">
+      <include name="lib/deploy.jar"/>
+      <include name="lib/dt.jar"/>
+      <include name="lib/javaws.jar"/>
+      <include name="lib/jce.jar"/>
+      <include name="lib/jconsole.jar"/>
+      <include name="lib/management-agent.jar"/>
+      <include name="lib/plugin.jar"/>
+      <include name="lib/sa-jdi.jar"/>
+      <include name="../Classes/charsets.jar"/>
+      <include name="../Classes/classes.jar"/>
+      <include name="../Classes/jsse.jar"/>
+      <include name="../Classes/ui.jar"/>
+      <include name="lib/ext/apple_provider.jar"/>
+      <include name="lib/ext/dnsns.jar"/>
+      <include name="lib/ext/localedata.jar"/>
+      <include name="lib/ext/sunjce_provider.jar"/>
+      <include name="lib/ext/sunpkcs11.jar"/>
+    </fileset>
+  </path>
+  
+  <property name="project.jdk.home" value="${jdk.home.1.6}"/>
+  <property name="project.jdk.bin" value="${jdk.bin.1.6}"/>
+  <property name="project.jdk.classpath" value="jdk.classpath.1.6"/>
+  
+  
+  <!-- Project Libraries -->
+  
+  <path id="library.groovy-all-1.8.6.classpath">
+    <pathelement location="${basedir}/../lib/groovy-all-1.8.6.jar"/>
+  </path>
+  
+  <path id="library.groovy-lib_1.8.6.classpath">
+    <pathelement location="${basedir}/../../../../../usr/share/java/groovy-1.8.6/lib/ant-1.8.2.jar"/>
+    <pathelement location="${basedir}/../../../../../usr/share/java/groovy-1.8.6/lib/ant-antlr-1.8.2.jar"/>
+    <pathelement location="${basedir}/../../../../../usr/share/java/groovy-1.8.6/lib/ant-junit-1.8.2.jar"/>
+    <pathelement location="${basedir}/../../../../../usr/share/java/groovy-1.8.6/lib/ant-launcher-1.8.2.jar"/>
+    <pathelement location="${basedir}/../../../../../usr/share/java/groovy-1.8.6/lib/antlr-2.7.7.jar"/>
+    <pathelement location="${basedir}/../../../../../usr/share/java/groovy-1.8.6/lib/asm-3.2.jar"/>
+    <pathelement location="${basedir}/../../../../../usr/share/java/groovy-1.8.6/lib/asm-analysis-3.2.jar"/>
+    <pathelement location="${basedir}/../../../../../usr/share/java/groovy-1.8.6/lib/asm-commons-3.2.jar"/>
+    <pathelement location="${basedir}/../../../../../usr/share/java/groovy-1.8.6/lib/asm-tree-3.2.jar"/>
+    <pathelement location="${basedir}/../../../../../usr/share/java/groovy-1.8.6/lib/asm-util-3.2.jar"/>
+    <pathelement location="${basedir}/../../../../../usr/share/java/groovy-1.8.6/lib/bsf-2.4.0.jar"/>
+    <pathelement location="${basedir}/../../../../../usr/share/java/groovy-1.8.6/lib/commons-cli-1.2.jar"/>
+    <pathelement location="${basedir}/../../../../../usr/share/java/groovy-1.8.6/lib/commons-logging-1.1.1.jar"/>
+    <pathelement location="${basedir}/../../../../../usr/share/java/groovy-1.8.6/lib/extra166y-1.7.0.jar"/>
+    <pathelement location="${basedir}/../../../../../usr/share/java/groovy-1.8.6/lib/gpars-0.12.jar"/>
+    <pathelement location="${basedir}/../../../../../usr/share/java/groovy-1.8.6/lib/groovy-1.8.6.jar"/>
+    <pathelement location="${basedir}/../../../../../usr/share/java/groovy-1.8.6/lib/hamcrest-core-1.1.jar"/>
+    <pathelement location="${basedir}/../../../../../usr/share/java/groovy-1.8.6/lib/ivy-2.2.0.jar"/>
+    <pathelement location="${basedir}/../../../../../usr/share/java/groovy-1.8.6/lib/jansi-1.7.jar"/>
+    <pathelement location="${basedir}/../../../../../usr/share/java/groovy-1.8.6/lib/jline-0.9.94.jar"/>
+    <pathelement location="${basedir}/../../../../../usr/share/java/groovy-1.8.6/lib/jsp-api-2.0.jar"/>
+    <pathelement location="${basedir}/../../../../../usr/share/java/groovy-1.8.6/lib/jsr166y-1.7.0.jar"/>
+    <pathelement location="${basedir}/../../../../../usr/share/java/groovy-1.8.6/lib/junit-4.10.jar"/>
+    <pathelement location="${basedir}/../../../../../usr/share/java/groovy-1.8.6/lib/servlet-api-2.4.jar"/>
+    <pathelement location="${basedir}/../../../../../usr/share/java/groovy-1.8.6/lib/xmlpull-1.1.3.1.jar"/>
+    <pathelement location="${basedir}/../../../../../usr/share/java/groovy-1.8.6/lib/xstream-1.4.1.jar"/>
+  </path>
+  
+  <path id="library.lib.classpath">
+    <pathelement location="${basedir}/lib/asm-3.2.jar"/>
+    <pathelement location="${basedir}/lib/asm-analysis-3.2.jar"/>
+    <pathelement location="${basedir}/lib/asm-commons-3.2.jar"/>
+    <pathelement location="${basedir}/lib/asm-tree-3.2.jar"/>
+    <pathelement location="${basedir}/lib/asm-util-3.2.jar"/>
+    <pathelement location="${basedir}/lib/commons-cli-1.2.jar"/>
+    <pathelement location="${basedir}/lib/groovy-1.8.6.jar"/>
+    <pathelement location="${basedir}/lib/postgresql-8.3-603.jdbc3.jar"/>
+  </path>
+  
+  
+  <!-- Global Libraries -->
+  
+  <path id="library.groovy-all-1.8.6.classpath">
+    <pathelement location="/Users/telekosmos/DevOps/epiquest/commons-lib/groovy-1.8.6.jar"/>
+    <pathelement location="/Users/telekosmos/DevOps/epiquest/commons-lib/groovy-all-1.8.6.jar"/>
+  </path>
+  
+  <path id="library.postgresql-9.1-901.jdbc3.classpath">
+    <pathelement location="/Users/telekosmos/DevOps/epiquest/commons-lib/postgresql-9.1-901.jdbc3.jar"/>
+  </path>
+  
+  
+  <!-- Application Server Libraries -->
+  <!-- Register Custom Compiler Taskdefs -->
+  <target name="register.custom.compilers">
+    <property name="grooovyc.task.sdk" value="library.groovy-all-1.8.6.classpath"/>
+    <taskdef name="groovyc" classname="org.codehaus.groovy.ant.Groovyc" classpathref="${grooovyc.task.sdk}"/>
+  </target>
+  
+  <!-- Modules -->
+  
+  
+  <!-- Module appform-dbfixer -->
+  
+  <dirname property="module.appform-dbfixer.basedir" file="${ant.file}"/>
+  
+  
+  <property name="module.jdk.home.appform-dbfixer" value="${project.jdk.home}"/>
+  <property name="module.jdk.bin.appform-dbfixer" value="${project.jdk.bin}"/>
+  <property name="module.jdk.classpath.appform-dbfixer" value="${project.jdk.classpath}"/>
+  
+  <property name="compiler.args.appform-dbfixer" value="${compiler.args}"/>
+  
+  <property name="appform-dbfixer.output.dir" value="${module.appform-dbfixer.basedir}/out/production/appform-dbfixer"/>
+  <property name="appform-dbfixer.testoutput.dir" value="${module.appform-dbfixer.basedir}/out/test/appform-dbfixer"/>
+  
+  <path id="appform-dbfixer.module.bootclasspath">
+    <!-- Paths to be included in compilation bootclasspath -->
+  </path>
+  
+  <path id="appform-dbfixer.module.production.classpath">
+    <path refid="${module.jdk.classpath.appform-dbfixer}"/>
+    <path refid="library.lib.classpath"/>
+    <path refid="library.groovy-lib_1.8.6.classpath"/>
+    <path refid="library.groovy-all-1.8.6.classpath"/>
+    <path refid="library.postgresql-9.1-901.jdbc3.classpath"/>
+  </path>
+  
+  <path id="appform-dbfixer.runtime.production.module.classpath">
+    <pathelement location="${appform-dbfixer.output.dir}"/>
+    <path refid="library.lib.classpath"/>
+    <path refid="library.groovy-lib_1.8.6.classpath"/>
+    <path refid="library.groovy-all-1.8.6.classpath"/>
+    <path refid="library.postgresql-9.1-901.jdbc3.classpath"/>
+  </path>
+  
+  <path id="appform-dbfixer.module.classpath">
+    <path refid="${module.jdk.classpath.appform-dbfixer}"/>
+    <pathelement location="${appform-dbfixer.output.dir}"/>
+    <path refid="library.lib.classpath"/>
+    <path refid="library.groovy-lib_1.8.6.classpath"/>
+    <path refid="library.groovy-all-1.8.6.classpath"/>
+    <path refid="library.postgresql-9.1-901.jdbc3.classpath"/>
+  </path>
+  
+  <path id="appform-dbfixer.runtime.module.classpath">
+    <pathelement location="${appform-dbfixer.testoutput.dir}"/>
+    <pathelement location="${appform-dbfixer.output.dir}"/>
+    <path refid="library.lib.classpath"/>
+    <path refid="library.groovy-lib_1.8.6.classpath"/>
+    <path refid="library.groovy-all-1.8.6.classpath"/>
+    <path refid="library.postgresql-9.1-901.jdbc3.classpath"/>
+  </path>
+  
+  
+  <patternset id="excluded.from.module.appform-dbfixer">
+    <patternset refid="ignored.files"/>
+  </patternset>
+  
+  <patternset id="excluded.from.compilation.appform-dbfixer">
+    <patternset refid="excluded.from.module.appform-dbfixer"/>
+  </patternset>
+  
+  <path id="appform-dbfixer.module.sourcepath">
+    <dirset dir="${module.appform-dbfixer.basedir}">
+      <include name="src"/>
+    </dirset>
+  </path>
+  
+  
+  <target name="compile.module.appform-dbfixer" depends="compile.module.appform-dbfixer.production,compile.module.appform-dbfixer.tests" description="Compile module appform-dbfixer"/>
+  
+  <target name="compile.module.appform-dbfixer.production" depends="register.custom.compilers" description="Compile module appform-dbfixer; production classes">
+    <mkdir dir="${appform-dbfixer.output.dir}"/>
+    <groovyc destdir="${appform-dbfixer.output.dir}" fork="yes">
+      <src refid="appform-dbfixer.module.sourcepath"/>
+      <classpath refid="appform-dbfixer.module.production.classpath"/>
+      <patternset refid="excluded.from.compilation.appform-dbfixer"/>
+      <javac debug="${compiler.debug}">
+        <compilerarg line="${compiler.args.appform-dbfixer}"/>
+      </javac>
+    </groovyc>
+    
+    <copy todir="${appform-dbfixer.output.dir}">
+      <fileset dir="${module.appform-dbfixer.basedir}/src">
+        <patternset refid="compiler.resources"/>
+        <type type="file"/>
+      </fileset>
+    </copy>
+  </target>
+  
+  <target name="compile.module.appform-dbfixer.tests" depends="register.custom.compilers,compile.module.appform-dbfixer.production" description="compile module appform-dbfixer; test classes" unless="skip.tests"/>
+  
+  <target name="clean.module.appform-dbfixer" description="cleanup module">
+    <delete dir="${appform-dbfixer.output.dir}"/>
+    <delete dir="${appform-dbfixer.testoutput.dir}"/>
+  </target>
+  
+  <target name="init" description="Build initialization">
+    <!-- Perform any build initialization in this target -->
+  </target>
+  
+  <target name="clean" depends="clean.module.appform-dbfixer" description="cleanup all"/>
+  
+  <target name="build.modules" depends="init, clean, compile.module.appform-dbfixer" description="build all modules"/>
+  
+  <target name="init.artifacts">
+    <property name="artifacts.temp.dir" value="${basedir}/__artifacts_temp"/>
+    <property name="artifact.output.appform-dbfixer:jar" value="${basedir}/out/artifacts"/>
+    <property name="artifact.output.sqlfixer" value="${basedir}/out/artifacts/sqlfixer"/>
+    <mkdir dir="${artifacts.temp.dir}"/>
+    <property name="temp.jar.path.appform-dbfixer.jar" value="${artifacts.temp.dir}/appform-dbfixer.jar"/>
+    <property name="temp.jar.path.sqlfixer.jar" value="${artifacts.temp.dir}/sqlfixer.jar"/>
+  </target>
+  
+  <target name="artifact.appform-dbfixer:jar" depends="init.artifacts, compile.module.appform-dbfixer" description="Build &#39;appform-dbfixer:jar&#39; artifact">
+    <property name="artifact.temp.output.appform-dbfixer:jar" value="${artifacts.temp.dir}/appform_dbfixer_jar"/>
+    <mkdir dir="${artifact.temp.output.appform-dbfixer:jar}"/>
+    <jar destfile="${temp.jar.path.appform-dbfixer.jar}" duplicate="preserve" filesetmanifest="mergewithoutmain">
+      <zipfileset dir="${appform-dbfixer.output.dir}"/>
+      <zipfileset src="${basedir}/../lib/groovy-all-1.8.6.jar"/>
+      <zipfileset src="${basedir}/lib/commons-cli-1.2.jar"/>
+      <zipfileset src="${basedir}/lib/postgresql-8.3-603.jdbc3.jar"/>
+      <zipfileset src="${basedir}/lib/asm-util-3.2.jar"/>
+      <zipfileset src="${basedir}/../../../../../usr/share/java/groovy-1.8.6/lib/ant-1.8.2.jar"/>
+      <zipfileset src="${basedir}/../../../../../usr/share/java/groovy-1.8.6/lib/ant-antlr-1.8.2.jar"/>
+      <zipfileset src="${basedir}/../../../../../usr/share/java/groovy-1.8.6/lib/ant-junit-1.8.2.jar"/>
+      <zipfileset src="${basedir}/../../../../../usr/share/java/groovy-1.8.6/lib/ant-launcher-1.8.2.jar"/>
+      <zipfileset src="${basedir}/../../../../../usr/share/java/groovy-1.8.6/lib/antlr-2.7.7.jar"/>
+      <zipfileset src="${basedir}/../../../../../usr/share/java/groovy-1.8.6/lib/asm-3.2.jar"/>
+      <zipfileset src="${basedir}/../../../../../usr/share/java/groovy-1.8.6/lib/asm-analysis-3.2.jar"/>
+      <zipfileset src="${basedir}/../../../../../usr/share/java/groovy-1.8.6/lib/asm-commons-3.2.jar"/>
+      <zipfileset src="${basedir}/../../../../../usr/share/java/groovy-1.8.6/lib/asm-tree-3.2.jar"/>
+      <zipfileset src="${basedir}/../../../../../usr/share/java/groovy-1.8.6/lib/asm-util-3.2.jar"/>
+      <zipfileset src="${basedir}/../../../../../usr/share/java/groovy-1.8.6/lib/bsf-2.4.0.jar"/>
+      <zipfileset src="${basedir}/../../../../../usr/share/java/groovy-1.8.6/lib/commons-cli-1.2.jar"/>
+      <zipfileset src="${basedir}/../../../../../usr/share/java/groovy-1.8.6/lib/commons-logging-1.1.1.jar"/>
+      <zipfileset src="${basedir}/../../../../../usr/share/java/groovy-1.8.6/lib/extra166y-1.7.0.jar"/>
+      <zipfileset src="${basedir}/../../../../../usr/share/java/groovy-1.8.6/lib/gpars-0.12.jar"/>
+      <zipfileset src="${basedir}/../../../../../usr/share/java/groovy-1.8.6/lib/groovy-1.8.6.jar"/>
+      <zipfileset src="${basedir}/../../../../../usr/share/java/groovy-1.8.6/lib/hamcrest-core-1.1.jar"/>
+      <zipfileset src="${basedir}/../../../../../usr/share/java/groovy-1.8.6/lib/ivy-2.2.0.jar"/>
+      <zipfileset src="${basedir}/../../../../../usr/share/java/groovy-1.8.6/lib/jansi-1.7.jar"/>
+      <zipfileset src="${basedir}/../../../../../usr/share/java/groovy-1.8.6/lib/jline-0.9.94.jar"/>
+      <zipfileset src="${basedir}/../../../../../usr/share/java/groovy-1.8.6/lib/jsp-api-2.0.jar"/>
+      <zipfileset src="${basedir}/../../../../../usr/share/java/groovy-1.8.6/lib/jsr166y-1.7.0.jar"/>
+      <zipfileset src="${basedir}/../../../../../usr/share/java/groovy-1.8.6/lib/junit-4.10.jar"/>
+      <zipfileset src="${basedir}/../../../../../usr/share/java/groovy-1.8.6/lib/servlet-api-2.4.jar"/>
+      <zipfileset src="${basedir}/../../../../../usr/share/java/groovy-1.8.6/lib/xmlpull-1.1.3.1.jar"/>
+      <zipfileset src="${basedir}/../../../../../usr/share/java/groovy-1.8.6/lib/xstream-1.4.1.jar"/>
+    </jar>
+    <copy file="${temp.jar.path.appform-dbfixer.jar}" tofile="${artifact.temp.output.appform-dbfixer:jar}/appform-dbfixer.jar"/>
+  </target>
+  
+  <target name="artifact.sqlfixer" depends="init.artifacts, compile.module.appform-dbfixer" description="Build &#39;sqlfixer&#39; artifact">
+    <property name="artifact.temp.output.sqlfixer" value="${artifacts.temp.dir}/sqlfixer"/>
+    <mkdir dir="${artifact.temp.output.sqlfixer}"/>
+    <jar destfile="${temp.jar.path.sqlfixer.jar}" duplicate="preserve" filesetmanifest="mergewithoutmain">
+      <zipfileset dir="${appform-dbfixer.output.dir}"/>
+    </jar>
+    <copy file="${temp.jar.path.sqlfixer.jar}" tofile="${artifact.temp.output.sqlfixer}/sqlfixer.jar"/>
+  </target>
+  
+  <target name="build.all.artifacts" depends="artifact.appform-dbfixer:jar, artifact.sqlfixer" description="Build all artifacts">
+    <mkdir dir="${artifact.output.appform-dbfixer:jar}"/>
+    <copy todir="${artifact.output.appform-dbfixer:jar}">
+      <fileset dir="${artifact.temp.output.appform-dbfixer:jar}"/>
+    </copy>
+    <mkdir dir="${artifact.output.sqlfixer}"/>
+    <copy todir="${artifact.output.sqlfixer}">
+      <fileset dir="${artifact.temp.output.sqlfixer}"/>
+    </copy>
+    
+    <!-- Delete temporary files -->
+    <delete dir="${artifacts.temp.dir}"/>
+  </target>
+  
+  <target name="all" depends="build.modules, build.all.artifacts" description="build all"/>
+</project>
